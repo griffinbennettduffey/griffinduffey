@@ -1,34 +1,28 @@
-// Build step: copies the repo into dist/, inlining any HTML partials referenced
-// via data-include="<path>" so the deployed pages don't need a client-side fetch
-// to render the nav. Run locally with `npm run build`.
+// Build step: produces dist/ from source.
+// - HTML pages live in pages/ — they get inlined (data-include="..." → partial contents)
+//   and flattened into the root of dist/, so URLs stay flat regardless of source layout.
+// - Top-level asset folders (css/, js/, assets/) are copied verbatim.
+// - partials/ is NOT copied — it's only a source-time concept; the build inlines it.
+// Run with `npm run build`.
 
 const fs = require('node:fs');
 const path = require('node:path');
 
 const SRC = process.cwd();
 const OUT = path.join(SRC, 'dist');
+const PAGES = path.join(SRC, 'pages');
 
-// Entries at the repo root that should NOT be copied to dist/. Partials get
-// inlined into the HTML, so the partials/ folder itself doesn't need to ship.
-const SKIP = new Set([
-  '.git',
-  '.gitignore',
-  'node_modules',
-  'dist',
-  'partials',
-  'build.js',
-  'package.json',
-  'package-lock.json',
-  'README.md',
-]);
+// Top-level entries that ship verbatim to dist/. Anything else stays in source only.
+const ASSET_DIRS = ['css', 'js', 'assets'];
 
-// Matches: <tag ...attrs... data-include="path" ...attrs...>...inner...</tag>
-// Captures: 1=tagname, 2=attrs before, 3=partial path, 4=attrs after.
+// Matches <tag ...data-include="path"...>...</tag>. Captures: tag, attrs-before, path, attrs-after.
 const INCLUDE_RE = /<(\w+)([^>]*?)\s+data-include="([^"]+)"([^>]*?)>[\s\S]*?<\/\1>/g;
 
 function inlinePartials(html) {
   return html.replace(INCLUDE_RE, (_match, tag, before, partialPath, after) => {
-    const partial = fs.readFileSync(path.join(SRC, partialPath), 'utf-8').trimEnd();
+    // Strip leading slash so absolute-style paths (/partials/nav.html) join correctly.
+    const relPath = partialPath.replace(/^\//, '');
+    const partial = fs.readFileSync(path.join(SRC, relPath), 'utf-8').trimEnd();
     const attrs = `${before} ${after}`.replace(/\s+/g, ' ').trim();
     return `<${tag}${attrs ? ' ' + attrs : ''}>\n${partial}\n</${tag}>`;
   });
@@ -49,22 +43,22 @@ function copyRecursive(src, dst) {
 fs.rmSync(OUT, { recursive: true, force: true });
 fs.mkdirSync(OUT, { recursive: true });
 
+// 1. Process every .html in pages/ → dist/<basename>.html, inlining partials along the way.
 let htmlCount = 0;
-let copyCount = 0;
-
-for (const entry of fs.readdirSync(SRC)) {
-  if (SKIP.has(entry)) continue;
-  const srcPath = path.join(SRC, entry);
-  const dstPath = path.join(OUT, entry);
-
-  if (fs.statSync(srcPath).isFile() && entry.endsWith('.html')) {
-    const html = fs.readFileSync(srcPath, 'utf-8');
-    fs.writeFileSync(dstPath, inlinePartials(html));
-    htmlCount++;
-  } else {
-    copyRecursive(srcPath, dstPath);
-    copyCount++;
-  }
+for (const entry of fs.readdirSync(PAGES)) {
+  if (!entry.endsWith('.html')) continue;
+  const html = fs.readFileSync(path.join(PAGES, entry), 'utf-8');
+  fs.writeFileSync(path.join(OUT, entry), inlinePartials(html));
+  htmlCount++;
 }
 
-console.log(`Built ${htmlCount} HTML page(s), copied ${copyCount} top-level asset entr${copyCount === 1 ? 'y' : 'ies'} → ${path.relative(SRC, OUT)}/`);
+// 2. Copy each asset directory at its current path into dist/.
+let copyCount = 0;
+for (const dir of ASSET_DIRS) {
+  const srcPath = path.join(SRC, dir);
+  if (!fs.existsSync(srcPath)) continue;
+  copyRecursive(srcPath, path.join(OUT, dir));
+  copyCount++;
+}
+
+console.log(`Built ${htmlCount} HTML page(s), copied ${copyCount} asset director${copyCount === 1 ? 'y' : 'ies'} → ${path.relative(SRC, OUT)}/`);
