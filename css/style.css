@@ -160,7 +160,7 @@ a {
 }
 
 .project p + p {
-  margin-top: 0.4rem;
+  margin-top: 0.0rem;
 }
 
 /* ---------- Cert pop-up (fixed bottom-left, under the nav) ---------- */
