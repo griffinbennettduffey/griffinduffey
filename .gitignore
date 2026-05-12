@@ -12,6 +12,12 @@
 # Logs
 *.log
 
+# Build output
+dist/
+
+# Node
+node_modules/
+
 # Local env / secrets
 .env
 .env.local
