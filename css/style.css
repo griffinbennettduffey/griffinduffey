@@ -52,6 +52,10 @@ a {
   text-decoration: none;
 }
 
+.site-nav a[aria-current="page"] {
+  color: #ff1d21;
+}
+
 .site-nav .wordmark {
   display: inline-block;
 }
