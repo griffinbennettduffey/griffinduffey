@@ -37,3 +37,10 @@ function highlightActiveLink() {
 }
 
 loadIncludes();
+
+// Scrolling tab title
+let scrollingTitle = 'gggrrriiifffiiinnddduuufffeeeyyy ';
+setInterval(() => {
+  scrollingTitle = scrollingTitle.substring(1) + scrollingTitle.charAt(0);
+  document.title = scrollingTitle;
+}, 250);
