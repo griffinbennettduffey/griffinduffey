@@ -1,0 +1,285 @@
+/* ---------- Reset & base ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 100%;
+}
+
+body {
+  font-family: 'Arial Narrow', Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.25;
+  color: #1a1a1a;
+  background: #fff;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  color: inherit;
+}
+
+/* ---------- Page layout ---------- */
+
+.page-layout {
+  max-width: 90rem;
+  margin: 0 auto;
+}
+
+/* ---------- Nav: fixed in the top-left corner ---------- */
+
+.site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20%;
+  min-width: 12rem;
+  padding: 1rem 2rem;
+  z-index: 1;
+  font-size: 1rem;
+}
+
+.site-nav a {
+  text-decoration: none;
+}
+
+.site-nav .wordmark {
+  display: inline-block;
+}
+
+.site-nav .intro {
+  margin-top: 0.2rem;
+}
+
+.site-nav .roles,
+.site-nav .archives,
+.site-nav footer {
+  font-size: 0.9rem;
+}
+
+.site-nav .roles {
+  margin-top: 1rem;
+}
+
+.site-nav .archives {
+  margin-top: 1.5rem;
+}
+
+.site-nav footer {
+  margin-top: 1.5rem;
+}
+
+/* ---------- Page content sits to the right of the fixed nav ---------- */
+
+.page-content {
+  max-width: 70rem;
+  margin-left: max(22%, 14rem);
+  padding: 1rem 2rem 6rem;
+  font-size: 0.9rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.5rem;
+}
+
+/* ---------- Project groups: vertical label + project list ---------- */
+
+.project-group {
+  display: flex;
+  gap: .75rem;
+  min-width: 0;
+}
+
+.project-group-label {
+  flex: 0 0 2rem;
+  width: 2rem;
+  border-right: 1px solid #000;
+  align-self: stretch;
+  position: relative;
+  overflow: visible;
+}
+
+.project-group-label span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  white-space: nowrap;
+  transform: translate(-50%, -50%) rotate(-90deg);
+  transform-origin: center;
+  font-size: 0.9rem;
+}
+
+.project-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 0.25srem 0;
+}
+
+.project-title {
+  font-size: 1rem;
+  font-weight: normal;
+  margin: 0;
+}
+
+.project-title a {
+  text-decoration: underline;
+}
+
+.page-content a,
+.cert-popup a {
+  color: #0000ee;
+}
+
+.page-content a:visited,
+.cert-popup a:visited {
+  color: #551a8b;
+}
+
+.project-role {
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+  opacity: 1;
+}
+
+.project p {
+  line-height: 1.4;
+}
+
+.project p + p {
+  margin-top: 0.4rem;
+}
+
+/* ---------- Cert pop-up (fixed bottom-left, under the nav) ---------- */
+
+.cert-popup {
+  position: fixed;
+  left: 3%;
+  bottom: 5%;
+  width: 10rem;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.cert-blob {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: #a7f3d0;
+  animation: cert-blob-color 17.5s ease-in-out infinite;
+  transition: background-color 2s ease-in-out;
+}
+
+.cert-text {
+  font-size: 0.85rem;
+  text-align: center;
+  line-height: 1.2;
+}
+
+@keyframes cert-blob-color {
+  0%, 100% { background: #a7f3d0; }
+  14%      { background: #bae6fd; }
+  28%      { background: #fef08a; }
+  42%      { background: #fecdd3; }
+  57%      { background: #e9d5ff; }
+  71%      { background: #fed7aa; }
+  85%      { background: #f5d0fe; }
+}
+
+/* ---------- Archive pages (Are.na grid) ---------- */
+
+.archive {
+  margin-left: max(22%, 14rem);
+  padding: 1rem 1rem 4rem;
+}
+
+.arena-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 4px;
+}
+
+.arena-block {
+  transition: opacity 0.2s ease-in-out;
+}
+
+.arena-block:hover {
+  opacity: 0.8;
+}
+
+.arena-block a {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.arena-block img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.arena-loading,
+.arena-error {
+  grid-column: 1 / -1;
+  padding: 1rem 0;
+}
+
+/* ---------- Mobile: drop the fixed nav, stack everything ---------- */
+
+@media (max-width: 768px) {
+  .site-nav {
+    position: static;
+    width: 100%;
+    min-width: 0;
+    padding: 2rem 1.5rem 1rem;
+  }
+
+  .page-content {
+    margin-left: 0;
+    padding: 1.5rem;
+  }
+
+  .cert-popup {
+    position: static;
+    width: 100%;
+    flex-direction: row;
+    gap: 1rem;
+    margin: 1.5rem 0;
+    padding: 0 1.5rem;
+    align-items: flex-start;
+  }
+
+  .cert-text {
+    text-align: left;
+  }
+
+  .project-group-label {
+    flex-basis: 1.75rem;
+  }
+
+  .project-group-label span {
+    font-size: 0.8rem;
+  }
+
+  .archive {
+    margin-left: 0;
+    padding: 1rem;
+  }
+
+  .arena-container {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+}
