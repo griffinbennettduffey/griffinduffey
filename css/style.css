@@ -126,7 +126,7 @@ a {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  padding: 0.25srem 0;
+  padding: 0.25rem 0;
 }
 
 .project-title {
@@ -150,6 +150,7 @@ a {
 }
 
 .project-role {
+
   margin-top: 0.2rem;
   margin-bottom: 0.2rem;
   opacity: 1;
@@ -160,7 +161,7 @@ a {
 }
 
 .project p + p {
-  margin-top: 0.0rem;
+  margin-top: 0rem;
 }
 
 /* ---------- Cert pop-up (fixed bottom-left, under the nav) ---------- */
