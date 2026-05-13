@@ -183,6 +183,7 @@ a {
 .cert-blob {
   width: 3rem;
   height: 3rem;
+  flex-shrink: 0;
   border-radius: 50%;
   background: #a7f3d0;
   animation: cert-blob-color 17.5s ease-in-out infinite;
