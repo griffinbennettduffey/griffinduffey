@@ -247,6 +247,7 @@ a {
 /* ---------- Dialog popup (currently reading, etc.) ---------- */
 
 .dialog {
+  position: relative;
   border: 1px solid #000;
   padding: 1.5rem;
   max-width: 28rem;
@@ -261,24 +262,32 @@ a {
 }
 
 .dialog-close-form {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
   margin: 0;
-  text-align: right;
 }
 
 .dialog-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
   background: none;
   border: 0;
   font: inherit;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
+  line-height: 1;
   cursor: pointer;
   padding: 0;
-  line-height: 1;
 }
 
 .dialog-title {
   font-size: 1rem;
   font-weight: normal;
   margin-bottom: 1rem;
+  padding-right: 2.5rem;
 }
 
 .book-list {
