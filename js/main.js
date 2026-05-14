@@ -38,6 +38,17 @@ function highlightActiveLink() {
 
 loadIncludes();
 
+// Click any [data-open-dialog="<id>"] to open the matching <dialog id="dialog-<id>">
+document.addEventListener('click', (event) => {
+  const trigger = event.target.closest('[data-open-dialog]');
+  if (!trigger) return;
+  const id = trigger.getAttribute('data-open-dialog');
+  const dialog = document.getElementById(`dialog-${id}`);
+  if (dialog && typeof dialog.showModal === 'function') {
+    dialog.showModal();
+  }
+});
+
 // Scrolling tab title
 let scrollingTitle = 'gggrrriiifffiiinnddduuufffeeeyyy ';
 setInterval(() => {

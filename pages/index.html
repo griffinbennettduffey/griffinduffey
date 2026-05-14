@@ -12,8 +12,41 @@
 <body>
   <main class="page-layout home">
     <aside class="site-nav" data-include="/partials/nav.html"></aside>
+
+    <section class="home-icons">
+      <button class="desktop-icon" type="button" data-open-dialog="reading">
+        <img src="/assets/globe.gif" alt="" class="desktop-icon-image">
+        <span class="desktop-icon-label">what i'm currently reading</span>
+      </button>
+
+      <button class="desktop-icon" type="button" data-open-dialog="listening">
+        <img src="/assets/musical-notes.gif" alt="" class="desktop-icon-image">
+        <span class="desktop-icon-label">what i'm currently listening to</span>
+      </button>
+    </section>
+
+    <dialog class="dialog" id="dialog-reading">
+      <form method="dialog" class="dialog-close-form">
+        <button class="dialog-close" type="submit" aria-label="Close">×</button>
+      </form>
+      <h2 class="dialog-title">currently reading</h2>
+      <div data-widget="currently-reading">
+        <!-- Books injected at build time from Goodreads RSS -->
+      </div>
+    </dialog>
+
+    <dialog class="dialog" id="dialog-listening">
+      <form method="dialog" class="dialog-close-form">
+        <button class="dialog-close" type="submit" aria-label="Close">×</button>
+      </form>
+      <h2 class="dialog-title">top albums (past month)</h2>
+      <div data-widget="top-albums">
+        <!-- Albums injected at build time from Last.fm -->
+      </div>
+    </dialog>
   </main>
 
   <script src="/js/main.js"></script>
+  <script src="/js/lastfm.js"></script>
 </body>
 </html>
