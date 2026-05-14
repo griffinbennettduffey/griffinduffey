@@ -49,6 +49,19 @@ document.addEventListener('click', (event) => {
   }
 });
 
+// Tap/click outside the dialog content (on the backdrop) closes it.
+document.querySelectorAll('dialog').forEach((dialog) => {
+  dialog.addEventListener('click', (event) => {
+    const rect = dialog.getBoundingClientRect();
+    const insideDialog =
+      event.clientX >= rect.left &&
+      event.clientX <= rect.right &&
+      event.clientY >= rect.top &&
+      event.clientY <= rect.bottom;
+    if (!insideDialog) dialog.close();
+  });
+});
+
 // Scrolling tab title
 let scrollingTitle = 'gggrrriiifffiiinnddduuufffeeeyyy ';
 setInterval(() => {
