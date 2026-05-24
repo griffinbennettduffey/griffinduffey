@@ -31,7 +31,7 @@
       </form>
       <h2 class="dialog-title">currently reading</h2>
       <div data-widget="currently-reading">
-        <!-- Books injected at build time from Goodreads RSS -->
+        <!-- Books fetched at view time via /api/currently-reading (see js/goodreads.js) -->
       </div>
     </dialog>
 
@@ -39,14 +39,15 @@
       <form method="dialog" class="dialog-close-form">
         <button class="dialog-close" type="submit" aria-label="Close">×</button>
       </form>
-      <h2 class="dialog-title">top albums (past month)</h2>
+      <h2 class="dialog-title">top albums</h2>
       <div data-widget="top-albums">
-        <!-- Albums injected at build time from Last.fm -->
+        <!-- Albums fetched at view time from Last.fm (see js/lastfm.js) -->
       </div>
     </dialog>
   </main>
 
   <script src="/js/main.js"></script>
+  <script src="/js/goodreads.js"></script>
   <script src="/js/lastfm.js"></script>
 </body>
 </html>

@@ -255,6 +255,8 @@ a {
   padding: 1.5rem;
   max-width: 28rem;
   width: calc(100% - 2rem);
+  max-height: calc(100vh - 4rem);
+  overflow-y: auto;
   background: #fff;
   color: inherit;
   font: inherit;
@@ -327,6 +329,17 @@ a {
 
 .book-author {
   opacity: 0.7;
+}
+
+.album-section + .album-section {
+  margin-top: 1.25rem;
+}
+
+.album-section-title {
+  font-size: 0.9rem;
+  font-weight: normal;
+  opacity: 0.7;
+  margin: 0 0 0.5rem;
 }
 
 .album-list {

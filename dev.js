@@ -9,6 +9,7 @@ const http = require('node:http');
 
 const PORT = 3000;
 const WATCH_DIRS = ['pages', 'partials', 'css', 'js', 'assets'];
+const GOODREADS_RSS = 'https://www.goodreads.com/review/list_rss/43601117?shelf=currently-reading';
 const MIME = {
   '.html': 'text/html; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
@@ -50,9 +51,51 @@ function watchSources() {
   }
 }
 
+function readXmlTag(body, tag) {
+  const re = new RegExp(`<${tag}>(?:<!\\[CDATA\\[)?([\\s\\S]*?)(?:\\]\\]>)?</${tag}>`);
+  const m = body.match(re);
+  return m ? m[1].trim() : '';
+}
+
+function parseGoodreadsRss(xml) {
+  const books = [];
+  const itemRe = /<item>([\s\S]*?)<\/item>/g;
+  let match;
+  while ((match = itemRe.exec(xml)) !== null) {
+    const body = match[1];
+    const title = readXmlTag(body, 'title');
+    const author = readXmlTag(body, 'author_name');
+    const bookId = readXmlTag(body, 'book_id');
+    const cover = readXmlTag(body, 'book_medium_image_url');
+    if (title && bookId) {
+      books.push({ title, author, cover, url: `https://www.goodreads.com/book/show/${bookId}` });
+    }
+  }
+  return books;
+}
+
+async function serveCurrentlyReading(res) {
+  let books = [];
+  try {
+    const upstream = await fetch(GOODREADS_RSS);
+    if (upstream.ok) books = parseGoodreadsRss(await upstream.text());
+  } catch (err) {
+    console.warn(`[dev] Goodreads fetch failed: ${err.message}`);
+  }
+  res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+  res.end(JSON.stringify({ books }));
+}
+
 function serveDist() {
   http
     .createServer((req, res) => {
+      // Local stand-in for the Cloudflare Pages Function. Lets the widget work
+      // in `npm run dev` without deploying. Same response shape as production.
+      if (req.url === '/api/currently-reading') {
+        serveCurrentlyReading(res);
+        return;
+      }
+
       // SSE endpoint that the injected client script subscribes to.
       if (req.url === '/__dev__/sse') {
         res.writeHead(200, {
