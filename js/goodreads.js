@@ -30,10 +30,13 @@ function renderBooks(books) {
   return `<ul class="book-list">${items}</ul>`;
 }
 
+// The shelf is fetched from Goodreads at build time and written to
+// /data/currently-reading.json (see build.js) because Goodreads IP-blocks the
+// Cloudflare edge, so a live Pages Function can't reach it.
 async function loadCurrentlyReading(target) {
   target.innerHTML = '<p class="empty-state">Loading…</p>';
   try {
-    const response = await fetch('/api/currently-reading');
+    const response = await fetch('/data/currently-reading.json', { cache: 'no-cache' });
     if (!response.ok) throw new Error(`status ${response.status}`);
     const data = await response.json();
     target.innerHTML = renderBooks(data.books ?? []);
