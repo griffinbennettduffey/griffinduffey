@@ -33,8 +33,10 @@ function parseGoodreadsRss(xml) {
   return books;
 }
 
-export async function onRequestGet() {
+export async function onRequestGet({ request }) {
+  const debug = new URL(request.url).searchParams.has('debug');
   let books = [];
+  const diag = { version: 'ua-2', upstreamStatus: null, bodyLen: 0, error: null };
   try {
     // Goodreads returns 403 to requests without a browser-like User-Agent
     // (the Workers runtime doesn't send one by default), so set it explicitly.
@@ -46,14 +48,18 @@ export async function onRequestGet() {
       },
       cf: { cacheTtl: CACHE_SECONDS, cacheEverything: true },
     });
+    diag.upstreamStatus = upstream.status;
     if (upstream.ok) {
-      books = parseGoodreadsRss(await upstream.text());
+      const text = await upstream.text();
+      diag.bodyLen = text.length;
+      books = parseGoodreadsRss(text);
     }
-  } catch (_err) {
+  } catch (err) {
+    diag.error = String(err && err.message ? err.message : err);
     // fall through with empty list; client renders empty state
   }
 
-  return new Response(JSON.stringify({ books }), {
+  return new Response(JSON.stringify(debug ? { books, diag } : { books }), {
     headers: {
       'content-type': 'application/json; charset=utf-8',
       'cache-control': `public, max-age=${CACHE_SECONDS}, s-maxage=${CACHE_SECONDS}`,
