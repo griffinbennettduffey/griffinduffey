@@ -1,0 +1,32 @@
+name: Refresh currently-reading
+
+# Goodreads' shelf is fetched at build time (see build.js), so "refreshing" it
+# just means triggering a new Cloudflare Pages deploy on a schedule. This POSTs
+# to a Cloudflare Pages Deploy Hook stored in the CF_DEPLOY_HOOK repo secret.
+#
+# Setup (one time):
+#   1. Cloudflare dashboard → Workers & Pages → your Pages project →
+#      Settings → Builds & deployments → Deploy hooks → "Add deploy hook".
+#      Name it (e.g. "cron"), pick the production branch (main), Save.
+#   2. Copy the generated URL and add it as a repo secret named CF_DEPLOY_HOOK
+#      (GitHub → repo Settings → Secrets and variables → Actions → New secret,
+#       or:  gh secret set CF_DEPLOY_HOOK).
+
+on:
+  schedule:
+    - cron: '0 */6 * * *' # every 6 hours
+  workflow_dispatch: {} # allow manual runs from the Actions tab
+
+jobs:
+  trigger-rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Cloudflare Pages deploy
+        env:
+          CF_DEPLOY_HOOK: ${{ secrets.CF_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$CF_DEPLOY_HOOK" ]; then
+            echo "::error::CF_DEPLOY_HOOK secret is not set. See the setup notes at the top of this workflow."
+            exit 1
+          fi
+          curl -fsS -X POST "$CF_DEPLOY_HOOK" -o /dev/null -w "Triggered Cloudflare deploy: HTTP %{http_code}\n"
