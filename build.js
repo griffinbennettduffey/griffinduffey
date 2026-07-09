@@ -4,9 +4,10 @@
 // - Top-level asset folders (css/, js/, assets/) are copied verbatim.
 // - partials/ is NOT copied — it's only a source-time concept; the build inlines it.
 // - Dynamic widgets (data-widget="...") are filled in the browser at runtime by
-//   their own scripts (see js/lastfm.js, js/goodreads.js), which hit either the
-//   third-party API directly (Last.fm has CORS) or a Cloudflare Pages Function
-//   (functions/api/*) for things that need a proxy.
+//   their own scripts (see js/lastfm.js, js/goodreads.js). Last.fm has CORS so
+//   its script hits the API directly; Goodreads IP-blocks the Cloudflare edge,
+//   so this build fetches that shelf and emits dist/data/currently-reading.json
+//   for the client to read (see writeCurrentlyReading below).
 // Run with `npm run build`.
 
 const fs = require('node:fs');
