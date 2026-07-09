@@ -36,7 +36,14 @@ function parseGoodreadsRss(xml) {
 export async function onRequestGet() {
   let books = [];
   try {
+    // Goodreads returns 403 to requests without a browser-like User-Agent
+    // (the Workers runtime doesn't send one by default), so set it explicitly.
     const upstream = await fetch(GOODREADS_RSS, {
+      headers: {
+        'user-agent':
+          'Mozilla/5.0 (compatible; griffinduffey.com/1.0; +https://griffinduffey.com)',
+        accept: 'application/rss+xml, application/xml, text/xml',
+      },
       cf: { cacheTtl: CACHE_SECONDS, cacheEverything: true },
     });
     if (upstream.ok) {
