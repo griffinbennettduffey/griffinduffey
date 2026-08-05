@@ -1,5 +1,5 @@
 /* Cody × Yellowstone trip — offline cache */
-const CACHE = "cy-trip-v2";
+const CACHE = "cy-trip-v3";
 const ASSETS = ["/cowboymode"];
 
 self.addEventListener("install", (e) => {
