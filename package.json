@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "node build.js",
-    "dev": "node dev.js"
+    "dev": "node dev.js",
+    "pdf": "node build.js && node pdf.js"
   }
 }
