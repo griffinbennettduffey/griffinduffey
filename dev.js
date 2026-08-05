@@ -61,40 +61,33 @@ function sendLogin(res, failed) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#1c1b16">
+<meta name="theme-color" content="#ffffff">
 <meta name="robots" content="noindex">
 <title>Cody × Yellowstone — Aug 2026</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   body{
-    font-family:"Times New Roman",Times,"Liberation Serif",Georgia,serif;
-    background:#f2f1ea;color:#17170f;min-height:100dvh;
-    display:flex;align-items:center;justify-content:center;padding:1.5rem;
+    font-family:Times,"Times New Roman","Liberation Serif",serif;
+    font-size:17px;line-height:1.5;color:#111;background:#fff;
+    min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:1.5rem;
   }
-  form{width:100%;max-width:22rem}
-  .eyebrow{font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:#6f6d60;margin-bottom:.45rem}
-  h1{font-size:1.5rem;font-weight:800;letter-spacing:-.01em;line-height:1.1}
-  h1 .x{color:#c05a1f;font-weight:400;padding:0 .1em}
-  .rule{height:4px;background:#c05a1f;margin:1rem 0 1.4rem}
-  label{display:block;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#6f6d60;margin-bottom:.4rem}
-  input{
-    font:inherit;font-size:1rem;width:100%;padding:.7rem .8rem;
-    background:#fbfaf5;border:1px solid #d8d5c8;border-radius:.5rem;color:#17170f;
-  }
-  input:focus{outline:2px solid #4f5d42;outline-offset:1px;border-color:#4f5d42}
-  button{
-    font:inherit;font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-    width:100%;margin-top:.7rem;padding:.75rem;cursor:pointer;
-    background:#1c1b16;border:0;border-radius:.5rem;color:#f4f2ea;
-  }
-  .err{font-size:.78rem;color:#c05a1f;margin-top:.7rem;font-style:italic}
+  form{width:100%;max-width:20rem}
+  .eyebrow{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#8c8c8c;margin-bottom:.4rem}
+  h1{font-size:1.3rem;font-weight:700;line-height:1.2}
+  h1 .x{color:#8c8c8c;font-weight:400;padding:0 .12em}
+  hr{border:0;border-top:1px solid #e0e0e0;margin:1rem 0 1.3rem}
+  label{display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#8c8c8c;margin-bottom:.4rem}
+  input{font:inherit;font-size:1rem;width:100%;padding:.55rem .6rem;background:#fff;border:1px solid #ccc;color:#111}
+  input:focus{outline:none;border-color:#111}
+  button{font:inherit;font-size:.85rem;width:100%;margin-top:.6rem;padding:.6rem;cursor:pointer;background:#fff;border:1px solid #111;color:#111}
+  .err{font-size:.85rem;color:#666;margin-top:.7rem;font-style:italic}
 </style>
 </head>
 <body>
 <form method="POST">
   <p class="eyebrow">Private itinerary</p>
   <h1>CODY<span class="x">×</span>YELLOWSTONE</h1>
-  <div class="rule"></div>
+  <hr>
   <label for="p">Password</label>
   <input id="p" name="password" type="password" autocomplete="current-password" autocapitalize="off" autocorrect="off" required autofocus>
   <button type="submit">Enter</button>

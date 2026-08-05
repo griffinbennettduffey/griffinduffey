@@ -4,151 +4,133 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Cowboy Mode">
-<meta name="theme-color" content="#1c1b16">
+<meta name="theme-color" content="#ffffff">
 <meta name="robots" content="noindex">
 <title>Cody × Yellowstone — Aug 2026</title>
 <style>
+  /* One serif, black on white, hairline rules. Hierarchy comes from size,
+     weight and space — no colour, no cards, no rounded corners. The layout
+     that makes this usable in the field stays exactly as it was: fixed time
+     column, tappable rows, sticky day nav. */
   :root{
-    --ink:#17170f; --band:#1c1b16; --paper:#f2f1ea; --card:#fbfaf5;
-    --pine:#4f5d42; --pine-deep:#3a4530; --thermal:#c05a1f; --lake:#5f8393;
-    --rule:#d8d5c8; --mute:#6f6d60; --done:#a8a494;
+    --ink:#111; --mute:#666; --faint:#8c8c8c; --rule:#e0e0e0; --hair:#f0f0f0; --done:#aaa;
   }
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   body{
-    font-family:"Times New Roman",Times,"Liberation Serif",Georgia,serif;
-    background:var(--paper);color:var(--ink);padding-bottom:2.5rem;
+    font-family:Times,"Times New Roman","Liberation Serif",serif;
+    font-size:17px;line-height:1.5;color:var(--ink);background:#fff;
+    max-width:36rem;margin:0 auto;padding:0 1.1rem 4rem;
+    -webkit-text-size-adjust:100%;
   }
-  header{
-    background:var(--band);color:#f4f2ea;
-    padding:calc(env(safe-area-inset-top,0px) + 1.1rem) 1.1rem 1rem;
-  }
-  .eyebrow{font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:#b9b5a6;margin-bottom:.35rem}
-  h1{font-size:1.5rem;font-weight:800;letter-spacing:-.01em;line-height:1.1}
-  h1 .x{color:var(--thermal);font-weight:400;padding:0 .1em}
-  .hdr-sub{font-size:.8rem;color:#b9b5a6;margin-top:.4rem;line-height:1.5}
+
+  /* ---- header ---- */
+  header{padding:calc(env(safe-area-inset-top,0px) + 1.5rem) 0 0}
+  .eyebrow{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:.4rem}
+  h1{font-size:1.3rem;font-weight:700;line-height:1.2}
+  h1 .x{color:var(--faint);font-weight:400;padding:0 .12em}
+  .hdr-sub{font-size:.88rem;color:var(--mute);margin-top:.45rem}
+  .legend{font-size:.8rem;line-height:1.45;color:var(--mute);margin-top:.7rem}
+  .legend b{color:var(--ink);font-weight:700}
+
+  /* ---- day nav ---- */
   nav{
-    position:sticky;top:0;z-index:10;background:var(--band);
-    display:flex;overflow-x:auto;scrollbar-width:none;
-    border-bottom:4px solid var(--thermal);
+    position:sticky;top:0;z-index:10;background:#fff;
+    display:flex;gap:1.1rem;overflow-x:auto;scrollbar-width:none;
+    margin:1.1rem -1.1rem 0;padding:.6rem 1.1rem;
+    border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
   }
   nav::-webkit-scrollbar{display:none}
   nav a{
-    flex:0 0 auto;padding:.7rem .85rem .6rem;color:#b9b5a6;text-decoration:none;
-    font-size:.74rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-    text-align:center;line-height:1.25;
+    flex:0 0 auto;color:var(--ink);text-decoration:none;
+    font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;
   }
-  nav a small{display:block;font-size:.62rem;font-weight:500;text-transform:none;opacity:.8}
-  main{max-width:640px;margin:0 auto;padding:1rem .9rem 0}
-  section{scroll-margin-top:3.4rem;margin-bottom:2rem}
-  .dayhead{margin:.2rem 0 1rem;border-left:4px solid var(--pine);padding-left:.8rem}
-  .dayhead h2{font-size:1.2rem;font-weight:800}
-  .dayhead .meta{font-size:.8rem;color:var(--mute);margin-top:.3rem;line-height:1.6}
-  .meta b{color:var(--pine-deep);font-weight:700}
-  .shiftrow{display:none;gap:.35rem;flex-wrap:wrap;margin-top:.6rem}
+  nav a small{color:var(--faint);text-transform:none;letter-spacing:0;font-size:.8rem;margin-left:.3em}
+
+  /* ---- day heads ---- */
+  section{scroll-margin-top:3rem;margin-top:2.2rem}
+  .dayhead{margin-bottom:1rem}
+  .dayhead h2{font-size:1.05rem;font-weight:700}
+  .dayhead .meta{font-size:.85rem;color:var(--mute);margin-top:.25rem}
+  .meta b{color:var(--ink);font-weight:700}
+
+  /* ---- start-shift controls ---- */
+  .shiftrow{display:none;gap:.4rem;flex-wrap:wrap;margin-top:.7rem}
   .js .shiftrow{display:flex}
   .sh{
-    font:inherit;font-size:.72rem;font-weight:700;padding:.3rem .65rem;
-    border:1px solid var(--rule);border-radius:.9rem;background:var(--card);
-    color:var(--mute);cursor:pointer;text-align:center;line-height:1.3;
+    font:inherit;font-size:.78rem;line-height:1.3;text-align:left;
+    padding:.35rem .55rem;cursor:pointer;
+    background:none;border:1px solid var(--rule);color:var(--mute);
   }
-  .sh span{display:block;font-weight:500;font-size:.64rem}
-  .sh.active{background:var(--pine);border-color:var(--pine);color:#fff}
-  .shnote{display:none;font-size:.7rem;color:var(--mute);margin-top:.35rem;font-style:italic}
+  .sh span{display:block;font-size:.7rem;color:var(--faint)}
+  .sh.active{border-color:var(--ink);color:var(--ink)}
+  .sh.active span{color:var(--mute)}
+  .shnote{display:none;font-size:.8rem;color:var(--faint);margin-top:.45rem}
   .js .shnote{display:block}
-  /* ---- stop cards ---- */
-  .stop{
-    position:relative;background:var(--card);border:1px solid var(--rule);
-    border-radius:.5rem;margin-bottom:.65rem;
-  }
-  .ck{position:absolute;opacity:0;pointer-events:none}
-  .check{
-    position:absolute;top:.7rem;right:.7rem;width:1.5rem;height:1.5rem;
-    border:2px solid var(--rule);border-radius:.35rem;background:var(--card);
-    display:flex;align-items:center;justify-content:center;
-    font-size:.9rem;color:transparent;cursor:pointer;z-index:2;
-    font-family:-apple-system,Helvetica,sans-serif;
-  }
-  .ck:checked + .check{background:var(--pine);border-color:var(--pine);color:#fff}
+
+  /* ---- stops ---- */
+  .stop{display:flex;gap:.6rem;border-top:1px solid var(--hair);padding:.7rem 0}
+  .ck{flex:0 0 auto;width:1.05rem;height:1.05rem;margin-top:.3rem;accent-color:#111}
+  .check{display:none}
+  .stop details{flex:1;min-width:0}
   .ck:checked ~ details summary .title,
   .ck:checked ~ details summary .time b{color:var(--done);text-decoration:line-through;text-decoration-thickness:1px}
-  details summary{
-    list-style:none;display:flex;align-items:flex-start;gap:.75rem;
-    padding:.75rem 2.7rem .75rem .8rem;cursor:pointer;
-  }
+  details summary{list-style:none;display:flex;align-items:flex-start;gap:.7rem;cursor:pointer}
   details summary::-webkit-details-marker{display:none}
-  .time{flex:0 0 4.1rem;padding-top:.1rem;font-variant-numeric:tabular-nums}
-  .time b{font-size:.82rem;font-weight:800;color:var(--pine-deep);letter-spacing:.02em}
-  .time small{font-weight:500;color:var(--mute);font-size:.62rem;margin-left:.1rem}
-  .time em{display:block;font-style:normal;font-weight:600;font-size:.72rem;color:var(--mute);margin-top:.1rem}
-  .tl{display:inline-block;font-size:.5rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--thermal);margin-right:.18rem;font-family:-apple-system,Helvetica,sans-serif}
-  .time em .tl{color:var(--mute)}
+  /* summary is a flex container, so ::after lands as the last flex item */
+  details summary::after{content:"+";flex:0 0 auto;color:#c4c4c4;font-size:.9rem}
+  details[open] summary::after{content:"\2212"}
+  .time{flex:0 0 4.3rem;font-variant-numeric:tabular-nums;font-size:.85rem;color:var(--mute)}
+  .time b{font-size:.9rem;font-weight:700;color:var(--ink)}
+  .time small{font-size:.75rem;color:var(--mute);margin-left:.12em}
+  .time em{display:block;font-style:normal;font-size:.8rem;color:var(--faint);margin-top:.1rem}
+  .time em small{color:inherit;font-size:.75rem}
+  .tl{font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-right:.25em}
   .stop-main{flex:1;min-width:0}
-  .title{font-size:1rem;font-weight:700;line-height:1.3}
-  .chips{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.4rem}
-  .chip{
-    font-size:.68rem;font-weight:600;padding:.18rem .5rem;border-radius:.9rem;
-    border:1px solid var(--rule);color:var(--mute);background:var(--paper);
-    font-family:-apple-system,Helvetica,sans-serif;font-size:.62rem;
-  }
-  .chip.drive{border-color:#c9d2d8;color:var(--lake);background:#eef2f4}
-  .body{padding:0 .8rem .85rem 5.65rem;font-size:.88rem;line-height:1.6;color:#3c3a30}
+  .title{font-weight:700;line-height:1.35}
+  .flow{display:block;margin-top:.2rem;font-size:.82rem;line-height:1.45;color:var(--mute)}
+  .flow em{font-style:italic}
+  /* chips read as a plain middot-separated run of text */
+  .chips{display:block;margin-top:.2rem;font-size:.8rem;color:var(--mute)}
+  .chip + .chip::before{content:" · ";color:#c4c4c4}
+  .chip.meal,.chip.swim{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
+  /* Full width on a phone — indenting prose to the title column costs about a
+     third of the measure. Align it only once there's room to spare. */
+  .body{padding:.55rem 0 .1rem;font-size:.92rem;line-height:1.6;color:#333}
+  @media (min-width:30rem){.body{padding-left:5rem}}
   .body p{margin-bottom:.5rem}
-  .lookfor{
-    border-left:3px solid var(--pine);background:#f0f1e9;
-    padding:.5rem .65rem;border-radius:0 .35rem .35rem 0;margin:.4rem 0 .55rem;
+  .body p:last-child{margin-bottom:0}
+  .maplink{display:inline-block;margin-top:.3rem;font-size:.88rem;color:var(--ink);text-decoration:underline;text-underline-offset:2px}
+
+  /* ---- asides: kit, look-for, trail ---- */
+  .kit,.lookfor,.trail{
+    border-left:1px solid var(--rule);padding-left:.75rem;color:#444;
+    font-size:.88rem;line-height:1.6;
   }
-  .lookfor b{
-    font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--pine-deep);
-    display:block;margin-bottom:.2rem;font-family:-apple-system,Helvetica,sans-serif;
+  .kit{margin:0 0 .9rem}
+  .lookfor,.trail{margin:.5rem 0}
+  /* first <b> is the label; a nested <b> stays ordinary emphasis */
+  .kit>b:first-child,.lookfor>b:first-child,.trail>b.h{
+    display:block;font-size:.7rem;font-weight:400;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--faint);margin-bottom:.15rem;
   }
-  .maplink{
-    display:inline-block;margin-top:.15rem;font-size:.78rem;font-weight:700;color:var(--lake);
-    text-decoration:none;border-bottom:1.5px solid #c4d0d7;
-  }
-  /* ---- info ---- */
-  .infoblock{
-    background:var(--card);border:1px solid var(--rule);border-radius:.5rem;
-    padding:.9rem .95rem;margin-bottom:.75rem;font-size:.88rem;line-height:1.6;
-  }
+
+  /* ---- reference ---- */
+  .infoblock{margin-top:1.4rem;font-size:.9rem;line-height:1.55}
   .infoblock h3{
-    font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--pine-deep);
-    margin-bottom:.5rem;font-weight:800;font-family:-apple-system,Helvetica,sans-serif;
+    font-size:.72rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--faint);margin-bottom:.45rem;padding-bottom:.3rem;border-bottom:1px solid var(--rule);
   }
-  .infoblock .big{font-size:1.1rem;font-weight:800;font-variant-numeric:tabular-nums}
-  .infoblock ul{list-style:none}
-  .infoblock li{padding:.22rem 0 .22rem 1.05rem;position:relative}
-  .infoblock li::before{content:"▸";position:absolute;left:0;color:var(--thermal);font-size:.75rem;top:.3rem}
-  .kv{display:flex;justify-content:space-between;gap:1rem;padding:.28rem 0;border-bottom:1px dashed var(--rule)}
+  .infoblock .big{font-weight:700;font-variant-numeric:tabular-nums}
+  .infoblock ul{list-style:disc;padding-left:1.1rem}
+  .infoblock li{padding:.15rem 0}
+  .kv{display:flex;justify-content:space-between;gap:1rem;padding:.3rem 0;border-bottom:1px solid var(--hair)}
   .kv:last-child{border-bottom:0}
-  .kv span:first-child{color:var(--mute);font-size:.78rem}
-  .kv span:last-child{font-weight:700;text-align:right}
-  footer{text-align:center;font-size:.66rem;color:var(--mute);letter-spacing:.14em;text-transform:uppercase;padding:1.2rem 0 .5rem}
+  .kv span:first-child{color:var(--mute)}
+  .kv span:last-child{text-align:right}
 
-  .kit{background:#eef0e7;border:1px dashed var(--pine);border-radius:.5rem;
-    padding:.6rem .8rem;margin:0 0 .8rem;font-size:.8rem;line-height:1.75;color:#3c3a30}
-  .kit b{display:block;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--pine-deep);margin-bottom:.25rem;font-family:-apple-system,Helvetica,sans-serif}
-  .chip.meal{background:var(--thermal);border-color:var(--thermal);color:#fff;
-    font-weight:800;letter-spacing:.08em;text-transform:uppercase}
-
-  .chip.swim{background:var(--lake);border-color:var(--lake);color:#fff;
-    font-weight:800;letter-spacing:.08em;text-transform:uppercase}
-
-  .legend{background:#26241d;color:#b9b5a6;font-size:.7rem;line-height:1.5;
-    padding:.45rem 1.1rem .55rem;border-top:1px solid #3a382f}
-  .legend b{color:#f4f2ea}
-  .legend .arw{color:var(--thermal);font-weight:800}
-
-  .flow{display:block;margin-top:.4rem;font-size:.68rem;line-height:1.5;color:var(--mute);
-    font-family:-apple-system,Helvetica,sans-serif;letter-spacing:.01em}
-  .flow em{font-style:normal;font-weight:700;color:var(--thermal)}
-
-  .trail{border-left:3px solid var(--lake);background:#eaf0f2;
-    padding:.5rem .65rem;border-radius:0 .35rem .35rem 0;margin:.4rem 0 .55rem}
-  .trail b.h{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:#3e5a66;
-    display:block;margin-bottom:.2rem;font-family:-apple-system,Helvetica,sans-serif}
+  footer{margin-top:2.5rem;padding-top:1rem;border-top:1px solid var(--rule);font-size:.8rem;color:var(--faint)}
 </style>
 </head>
 <body>
