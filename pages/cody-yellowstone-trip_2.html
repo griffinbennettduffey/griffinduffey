@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Cody × Yellowstone — Aug 2026</title>
+<style>
+  :root{
+    --ink:#17170f; --band:#1c1b16; --paper:#f2f1ea; --card:#fbfaf5;
+    --pine:#4f5d42; --pine-deep:#3a4530; --thermal:#c05a1f; --lake:#5f8393;
+    --rule:#d8d5c8; --mute:#6f6d60; --done:#a8a494;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{
+    font-family:"Times New Roman",Times,"Liberation Serif",Georgia,serif;
+    background:var(--paper);color:var(--ink);padding-bottom:2.5rem;
+  }
+  header{
+    background:var(--band);color:#f4f2ea;
+    padding:calc(env(safe-area-inset-top,0px) + 1.1rem) 1.1rem 1rem;
+  }
+  .eyebrow{font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:#b9b5a6;margin-bottom:.35rem}
+  h1{font-size:1.5rem;font-weight:800;letter-spacing:-.01em;line-height:1.1}
+  h1 .x{color:var(--thermal);font-weight:400;padding:0 .1em}
+  .hdr-sub{font-size:.8rem;color:#b9b5a6;margin-top:.4rem;line-height:1.5}
+  nav{
+    position:sticky;top:0;z-index:10;background:var(--band);
+    display:flex;overflow-x:auto;scrollbar-width:none;
+    border-bottom:4px solid var(--thermal);
+  }
+  nav::-webkit-scrollbar{display:none}
+  nav a{
+    flex:0 0 auto;padding:.7rem .85rem .6rem;color:#b9b5a6;text-decoration:none;
+    font-size:.74rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    text-align:center;line-height:1.25;
+  }
+  nav a small{display:block;font-size:.62rem;font-weight:500;text-transform:none;opacity:.8}
+  main{max-width:640px;margin:0 auto;padding:1rem .9rem 0}
+  section{scroll-margin-top:3.4rem;margin-bottom:2rem}
+  .dayhead{margin:.2rem 0 1rem;border-left:4px solid var(--pine);padding-left:.8rem}
+  .dayhead h2{font-size:1.2rem;font-weight:800}
+  .dayhead .meta{font-size:.8rem;color:var(--mute);margin-top:.3rem;line-height:1.6}
+  .meta b{color:var(--pine-deep);font-weight:700}
+  .shiftrow{display:none;gap:.35rem;flex-wrap:wrap;margin-top:.6rem}
+  .js .shiftrow{display:flex}
+  .sh{
+    font:inherit;font-size:.72rem;font-weight:700;padding:.3rem .65rem;
+    border:1px solid var(--rule);border-radius:.9rem;background:var(--card);
+    color:var(--mute);cursor:pointer;text-align:center;line-height:1.3;
+  }
+  .sh span{display:block;font-weight:500;font-size:.64rem}
+  .sh.active{background:var(--pine);border-color:var(--pine);color:#fff}
+  .shnote{display:none;font-size:.7rem;color:var(--mute);margin-top:.35rem;font-style:italic}
+  .js .shnote{display:block}
+  /* ---- stop cards ---- */
+  .stop{
+    position:relative;background:var(--card);border:1px solid var(--rule);
+    border-radius:.5rem;margin-bottom:.65rem;
+  }
+  .ck{position:absolute;opacity:0;pointer-events:none}
+  .check{
+    position:absolute;top:.7rem;right:.7rem;width:1.5rem;height:1.5rem;
+    border:2px solid var(--rule);border-radius:.35rem;background:var(--card);
+    display:flex;align-items:center;justify-content:center;
+    font-size:.9rem;color:transparent;cursor:pointer;z-index:2;
+    font-family:-apple-system,Helvetica,sans-serif;
+  }
+  .ck:checked + .check{background:var(--pine);border-color:var(--pine);color:#fff}
+  .ck:checked ~ details summary .title,
+  .ck:checked ~ details summary .time b{color:var(--done);text-decoration:line-through;text-decoration-thickness:1px}
+  details summary{
+    list-style:none;display:flex;align-items:flex-start;gap:.75rem;
+    padding:.75rem 2.7rem .75rem .8rem;cursor:pointer;
+  }
+  details summary::-webkit-details-marker{display:none}
+  .time{flex:0 0 4.1rem;padding-top:.1rem;font-variant-numeric:tabular-nums}
+  .time b{font-size:.82rem;font-weight:800;color:var(--pine-deep);letter-spacing:.02em}
+  .time small{font-weight:500;color:var(--mute);font-size:.62rem;margin-left:.1rem}
+  .time em{display:block;font-style:normal;font-weight:600;font-size:.72rem;color:var(--mute);margin-top:.1rem}
+  .tl{display:inline-block;font-size:.5rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--thermal);margin-right:.18rem;font-family:-apple-system,Helvetica,sans-serif}
+  .time em .tl{color:var(--mute)}
+  .stop-main{flex:1;min-width:0}
+  .title{font-size:1rem;font-weight:700;line-height:1.3}
+  .chips{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.4rem}
+  .chip{
+    font-size:.68rem;font-weight:600;padding:.18rem .5rem;border-radius:.9rem;
+    border:1px solid var(--rule);color:var(--mute);background:var(--paper);
+    font-family:-apple-system,Helvetica,sans-serif;font-size:.62rem;
+  }
+  .chip.drive{border-color:#c9d2d8;color:var(--lake);background:#eef2f4}
+  .body{padding:0 .8rem .85rem 5.65rem;font-size:.88rem;line-height:1.6;color:#3c3a30}
+  .body p{margin-bottom:.5rem}
+  .lookfor{
+    border-left:3px solid var(--pine);background:#f0f1e9;
+    padding:.5rem .65rem;border-radius:0 .35rem .35rem 0;margin:.4rem 0 .55rem;
+  }
+  .lookfor b{
+    font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--pine-deep);
+    display:block;margin-bottom:.2rem;font-family:-apple-system,Helvetica,sans-serif;
+  }
+  .maplink{
+    display:inline-block;margin-top:.15rem;font-size:.78rem;font-weight:700;color:var(--lake);
+    text-decoration:none;border-bottom:1.5px solid #c4d0d7;
+  }
+  /* ---- info ---- */
+  .infoblock{
+    background:var(--card);border:1px solid var(--rule);border-radius:.5rem;
+    padding:.9rem .95rem;margin-bottom:.75rem;font-size:.88rem;line-height:1.6;
+  }
+  .infoblock h3{
+    font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--pine-deep);
+    margin-bottom:.5rem;font-weight:800;font-family:-apple-system,Helvetica,sans-serif;
+  }
+  .infoblock .big{font-size:1.1rem;font-weight:800;font-variant-numeric:tabular-nums}
+  .infoblock ul{list-style:none}
+  .infoblock li{padding:.22rem 0 .22rem 1.05rem;position:relative}
+  .infoblock li::before{content:"▸";position:absolute;left:0;color:var(--thermal);font-size:.75rem;top:.3rem}
+  .kv{display:flex;justify-content:space-between;gap:1rem;padding:.28rem 0;border-bottom:1px dashed var(--rule)}
+  .kv:last-child{border-bottom:0}
+  .kv span:first-child{color:var(--mute);font-size:.78rem}
+  .kv span:last-child{font-weight:700;text-align:right}
+  footer{text-align:center;font-size:.66rem;color:var(--mute);letter-spacing:.14em;text-transform:uppercase;padding:1.2rem 0 .5rem}
+
+  .kit{background:#eef0e7;border:1px dashed var(--pine);border-radius:.5rem;
+    padding:.6rem .8rem;margin:0 0 .8rem;font-size:.8rem;line-height:1.75;color:#3c3a30}
+  .kit b{display:block;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--pine-deep);margin-bottom:.25rem;font-family:-apple-system,Helvetica,sans-serif}
+  .chip.meal{background:var(--thermal);border-color:var(--thermal);color:#fff;
+    font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+
+  .chip.swim{background:var(--lake);border-color:var(--lake);color:#fff;
+    font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+
+  .legend{background:#26241d;color:#b9b5a6;font-size:.7rem;line-height:1.5;
+    padding:.45rem 1.1rem .55rem;border-top:1px solid #3a382f}
+  .legend b{color:#f4f2ea}
+  .legend .arw{color:var(--thermal);font-weight:800}
+
+  .flow{display:block;margin-top:.4rem;font-size:.68rem;line-height:1.5;color:var(--mute);
+    font-family:-apple-system,Helvetica,sans-serif;letter-spacing:.01em}
+  .flow em{font-style:normal;font-weight:700;color:var(--thermal)}
+
+  .trail{border-left:3px solid var(--lake);background:#eaf0f2;
+    padding:.5rem .65rem;border-radius:0 .35rem .35rem 0;margin:.4rem 0 .55rem}
+  .trail b.h{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:#3e5a66;
+    display:block;margin-bottom:.2rem;font-family:-apple-system,Helvetica,sans-serif}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Field Itinerary · One Booking · ~735 of 1,000 mi</div>
+  <h1>CODY<span class="x">×</span>YELLOWSTONE</h1>
+  <div class="hdr-sub">Aug 6–11, 2026 · Base: 1822 Bleistein Ave · Grant Village Sat night · Rodeo Monday</div>
+<div class="legend"><b>Times:</b> <b>ARR</b> = pull in · <b>LV</b> = wheels rolling · <b>DEP</b> rows are drives/flights (second time = arrival). Chips like “→ 45 min” = drive time to reach that stop.</div></header>
+
+<nav>
+  <a href="#thu">THU<small>Aug 6</small></a>
+  <a href="#fri">FRI<small>Aug 7</small></a>
+  <a href="#sat">SAT<small>Aug 8</small></a>
+  <a href="#sun">SUN<small>Aug 9</small></a>
+  <a href="#mon">MON<small>Aug 10</small></a>
+  <a href="#tue">TUE<small>Aug 11</small></a>
+  <a href="#info">INFO<small>ref</small></a>
+</nav>
+
+<main>
+
+<!-- ================= THU ================= -->
+<section id="thu" data-date="2026-08-06">
+<div class="dayhead"><h2>Day 1 · Thu Aug 6 — Travel In</h2>
+<div class="meta">GSP → DEN → COD · <b>land 10:43 PM</b> · sleep: Bleistein</div></div>
+
+<div class="kit"><b>Today’s kit</b>Carry-on: chargers + one USB-C cable · Turo app signed in, <b style="display:inline;font-size:inherit;letter-spacing:0;text-transform:none;font-family:inherit">license uploaded</b> · Grant conf screenshot (20977608) · offline maps, park app, playlists downloaded · headlamp packed</div>
+<div class="stop"><input class="ck" type="checkbox" id="thu0"><label class="check" for="thu0">✓</label>
+<details><summary><span class="time" data-m="975" data-e="1075"><small class="tl">dep</small><b>4:15</b><small>PM</small><em><small class="tl">arr</small><span class="ev">5:55</span></em></span>
+<span class="stop-main"><span class="title">Depart GSP — UA1866 to Denver</span><span class="flow">1 hr 40 flight → Denver</span></span></summary>
+<div class="body"><p>Land DEN 5:55 PM. Offline maps, park app, playlists, podcasts downloaded before boarding. Grant confirmation screenshot in photos: <b>20977608</b>.</p></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="thu1"><label class="check" for="thu1">✓</label>
+<details><summary><span class="time" data-m="1075" data-e="1265"><small class="tl">arr</small><b>5:55</b><small>PM</small><em><small class="tl">lv</small><span class="ev">9:05</span></em></span>
+<span class="stop-main"><span class="title">Denver layover — eat a real dinner</span>
+<span class="chips"><span class="chip meal">Dinner</span><span class="chip drive">3 hrs</span></span><span class="flow">3 hr 10 layover + dinner · <em>board 9:05, fly → Cody</em></span></span></summary>
+<div class="body"><p>Nothing in Cody is open when you land. This is dinner. Board UA5132 at 9:05.</p></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="thu2"><label class="check" for="thu2">✓</label>
+<details><summary><span class="time" data-m="1363" data-e="1385"><small class="tl">arr</small><b>10:43</b><small>PM</small><em><small class="tl">lv</small><span class="ev">11:05</span></em></span>
+<span class="stop-main"><span class="title">Land Cody — grab the truck (contactless)</span>
+<span class="chips"><span class="chip drive">5 min</span></span><span class="flow">~20 min truck pickup + photos · <em>5 min drive → Bleistein</em></span></span></summary>
+<div class="body"><p>GMC Sierra 1500 waiting at the airport — Amber texts the exact spot + key location day-of (plate <b>11T482K</b>). <b>Before driving: full walkaround photos/video + odometer shot in the Turo app</b>, even at 11 PM — night pickups are exactly when you skip this and regret it. Body clock says 12:43 AM.</p><p>If energized: Walmart run tonight — cooler, ice, water, sandwich stuff, thermos, snacks.</p><a class="maplink" href="https://maps.google.com/?q=1822+Bleistein+Ave+Cody+WY">⌖ 1822 Bleistein Ave</a></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="thu3"><label class="check" for="thu3">✓</label>
+<details><summary><span class="time" data-m="1410"><small class="tl">at</small><b>11:30</b><small>PM</small></span>
+<span class="stop-main"><span class="title">Bed. No alarm.</span><span class="flow">lights out</span></span></summary>
+<div class="body"><p>Tomorrow starts when it starts. Errands first, mountains after.</p></div></details></div>
+</section>
+
+<!-- ================= FRI ================= -->
+<section id="fri" data-date="2026-08-07" data-shift>
+<div class="dayhead"><h2>Day 2 · Fri Aug 7 — The High Loop: Beartooth → Lamar</h2>
+<div class="meta">~220 mi · <b>~6 hrs driving</b> · home ~10:15 PM · sleep: Bleistein</div>
+<div class="shiftrow"></div>
+<div class="shnote">Slept in? Pick a shift — every time below moves with it. Sunset-tied stops stay put.</div></div>
+
+<div class="kit"><b>Today’s kit</b>Bear spray (buy first) · cooler + ice + lunch/dinner makings · water jugs · grandpa's binoculars · fleece + beanie (Lamar goes cold at dusk) · rain shell · headlamp · camp chair · sunscreen + hat · bug spray · thermos · full tank</div>
+<div class="stop"><input class="ck" type="checkbox" id="fri0"><label class="check" for="fri0">✓</label>
+<details><summary><span class="time" data-m="450" data-e="510"><small class="tl">arr</small><b>7:30</b><small>AM</small><em><small class="tl">lv</small><span class="ev">8:30</span></em></span>
+<span class="stop-main"><span class="title">Errands run</span>
+<span class="chips"><span class="chip meal">Breakfast · house</span></span><span class="flow">1 hr errands + load-up · <em>then roll out</em></span></span></summary>
+<div class="body"><p>One Walmart mission (~25 min, ~$110–140), then gas. If Thursday-night energy allowed an early run, this is just the gap-fill.</p>
+<div class="lookfor"><b>Cooler + drinks</b>Cheap cooler ($15–25, gets abandoned Tuesday) · 2 bags ice (restock Sat) · water gallons ×3–4 · electrolyte packets / Gatorade · Lamar truck-bed drinks</div>
+<div class="lookfor"><b>Sandwich operation</b>Bread or tortillas · deli meat + cheese · PB + jam · apples/clementines · trail mix · jerky · chips · granola/protein bars (glovebox stash) · grab-breakfast for Sunday 6:30 AM at Grant (pastries / oats cups)</div>
+<div class="lookfor"><b>Coffee kit</b>Thermos ($10, if the house is bare) · instant coffee you can respect (Via or similar — the Sunday huckleberry latte is the reward)</div>
+<div class="lookfor"><b>Safety + sundries</b><b style="display:inline;font-size:inherit;letter-spacing:0;text-transform:none;font-family:inherit">Bear spray ~$50</b> (if Walmart's wall looks stale, Sunlight Sports downtown opens at 9) · sunscreen SPF 30+ · SPF chapstick · small bug spray · blister bandages / moleskin + ibuprofen · wet wipes + paper towels · zip-locks (sandwiches + phone at the Firehole swim)</div>
+<div class="lookfor"><b>Judgment calls</b>Camp chair $10–15 (four hours in Lamar says yes) · cheap sandals/water shoes if unpacked · road candy for Chief Joseph at 9:45 PM</div>
+<p>Then: <b>full tank</b> on the way out of town.</p></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="fri1"><label class="check" for="fri1">✓</label>
+<details><summary><span class="time" data-m="510" data-e="565"><small class="tl">dep</small><b>8:30</b><small>AM</small><em><small class="tl">arr</small><span class="ev">9:25</span></em></span>
+<span class="stop-main"><span class="title">Depart — Chief Joseph Hwy</span>
+<span class="chips"><span class="chip drive">55 min</span></span><span class="flow"><em>55 min drive → Dead Indian Pass</em></span></span></summary>
+<div class="body"><p>North on WY-120, west on 296. Fresh chip seal this summer — easy on loose gravel.</p></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="fri2"><label class="check" for="fri2">✓</label>
+<details><summary><span class="time" data-m="565" data-e="590"><small class="tl">arr</small><b>9:25</b><small>AM</small><em><small class="tl">lv</small><span class="ev">9:50</span></em></span>
+<span class="stop-main"><span class="title">Dead Indian Pass Overlook</span>
+<span class="chips"><span class="chip">20 min stop</span></span><span class="flow">25 min at the overlook · <em>60 min drive → Beartooth Pass</em></span></span></summary>
+<div class="body"><p>Walk it, don't just shoot it. Clarks Fork canyon and Sunlight Basin below — the country the Nez Perce ran in 1877. The wall to the northwest is where you're headed.</p><p><b>Beta:</b> Big paved lot right at the summit — park anywhere, walk the low stone-wall rim to the interpretive signs at the far end. Best photo angle is from the little knob just past the signs. 15–20 min is the right dose; the road down the other side is the show’s second act.</p><a class="maplink" href="https://maps.google.com/?q=44.7448,-109.3862">⌖ Open in Maps</a></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="fri4"><label class="check" for="fri4">✓</label>
+<details><summary><span class="time" data-m="650" data-e="710"><small class="tl">arr</small><b>10:50</b><small>AM</small><em><small class="tl">lv</small><span class="ev">11:50</span></em></span>
+<span class="stop-main"><span class="title">Beartooth Pass — 10,947 ft</span>
+<span class="chips"><span class="chip drive">→ 60 min</span><span class="chip">a full hour on foot</span></span><span class="flow">a full hour on the tundra · <em>25 min drive → Rock Creek Vista</em></span></span></summary>
+<div class="body"><div class="lookfor"><b>Look for</b>Mountain goats on the crags · pikas squeaking in talus · peak wildflowers · touchable snowfields</div><p>The "another planet" report. Wander off the pullout into the tundra — most people give this four minutes. Can be 45°F and blowing while Cody bakes; the layer lives in the truck. (Cruise past Beartooth Lake without stopping — its shore walk is Monday’s show with mom.)</p><p><b>Beta:</b> Two pull-offs flank the actual summit sign — use the bigger one on the west side. Walk north off the pavement onto the tundra (it’s open travel up here, stay on rock/gravel where you can). Scan the crags south of the road for goats and listen for pika ‘eep’s in every talus pile. The West Summit overlook a mile further has the classic switchback-view pullout if you want one more stop.</p><div class="trail"><b class="h">Trail · no formal trail needed</b>Park the pullout and wander the open tundra 10–20 min on rock and gravel (stay off the fragile plant mats). Want a marked path instead? The Gardner Lake trailhead 0.5 mi down the east side drops to an alpine lake — but save the legs for Trout Lake this afternoon.</div><a class="maplink" href="https://maps.google.com/?q=44.9705,-109.4655">⌖ Open in Maps</a></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="fri5"><label class="check" for="fri5">✓</label>
+<details><summary><span class="time" data-m="735" data-e="750"><small class="tl">arr</small><b>12:15</b><small>PM</small><em><small class="tl">lv</small><span class="ev">12:30</span></em></span>
+<span class="stop-main"><span class="title">Rock Creek Vista — TURNAROUND</span>
+<span class="chips"><span class="chip drive">→ 25 min</span></span><span class="flow">15 min at the rail · <em>55 min drive → Cooke City</em></span></span></summary>
+<div class="body"><p><b>~15 min here</b>, then the hour back over the pass — Cooke City lunch at 1:25. 2,000-ft look down the glacial canyon. This is the top of the day — no Red Lodge descent. Retrace west.</p><p><b>Beta:</b> Big lot, and the overlook is a 300-yard paved path — easiest jaw-drop of the trip. Look straight down Rock Creek’s U-shaped glacial canyon; the road you’re NOT taking today snakes down its wall. Restrooms here — use them.</p><a class="maplink" href="https://maps.google.com/?q=45.0517,-109.4046">⌖ Open in Maps</a></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="fri6"><label class="check" for="fri6">✓</label>
+<details><summary><span class="time" data-m="805" data-e="850"><small class="tl">arr</small><b>1:25</b><small>PM</small><em><small class="tl">lv</small><span class="ev">2:10</span></em></span>
+<span class="stop-main"><span class="title">Cooke City — lunch · GAS · bathroom</span>
+<span class="chips"><span class="chip meal">Lunch</span><span class="chip drive">→ 55 min</span><span class="chip">Miners Saloon</span></span><span class="flow">45 min lunch + gas · <em>25 min drive → NE Entrance</em></span></span></summary>
+<div class="body"><p>Sit-down burger, no rush. <b>Last fuel before home.</b> The full pre-Lamar checklist, handled by a frontier town of ~100.</p><p><b>Beta:</b> Everything is on the one main street: Miners Saloon mid-town on the north side (order at the bar, cash preferred historically), gas at the stations on either end of town — hit whichever’s open, they keep frontier hours. Fill the water bottles too; next reliable everything is home.</p><a class="maplink" href="https://maps.google.com/?q=Miners+Saloon+Cooke+City+MT">⌖ Open in Maps</a></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="fri7"><label class="check" for="fri7">✓</label>
+<details><summary><span class="time" data-m="875" data-e="880"><small class="tl">arr</small><b>2:35</b><small>PM</small><em><small class="tl">lv</small><span class="ev">2:40</span></em></span>
+<span class="stop-main"><span class="title">Northeast Entrance</span>
+<span class="chips"><span class="chip drive">→ 25 min</span></span><span class="flow">5 min at the gate · <em>20 min drive → Trout Lake</em></span></span></summary>
+<div class="body"><p>$35 pass (7 days, keep the receipt) if not already bought. Quietest gate in the park.</p></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="fri8"><label class="check" for="fri8">✓</label>
+<details><summary><span class="time" data-m="900" data-e="975"><small class="tl">arr</small><b>3:00</b><small>PM</small><em><small class="tl">lv</small><span class="ev">4:15</span></em></span>
+<span class="stop-main"><span class="title">Trout Lake</span>
+<span class="chips"><span class="chip drive">→ 20 min</span><span class="chip">¾ mi steep</span><span class="chip">30 min at the water</span></span><span class="flow">1 hr 15 hike + lakeside sit · <em>15 min drive → Lamar</em></span></span></summary>
+<div class="body"><div class="lookfor"><b>Look for</b>Big cutthroat cruising the shallows · otters (reliable spot) · spray on hip</div><p>Steep climb through Douglas fir to absurdly clear water. First real payoff of the Hokas. Sit and watch the fish patrol.</p><p><b>Beta:</b> Trailhead is a small unsigned-feeling pullout on the north side of the road — if you hit Pebble Creek you went ~1.5 mi too far. The climb is steep but short (15 min of work). At the top, go LEFT around the lake — the inlet creek on the far side is where cutthroat stack and otters hunt. The downed logs along the west shore are the sitting spots.</p><div class="trail"><b class="h">Trail · Trout Lake Trail · 1.2–1.5 mi RT · ~380 ft · 45–75 min</b>Switchback up through the firs ~15–20 min to the lake. At the top take the shoreline path LEFT (clockwise): ~0.6 mi around, hitting the inlet creek on the far side (stacked cutthroat, otter territory) and the west-shore logs before closing the loop at the outlet. Same steep trail back down.</div><a class="maplink" href="https://maps.google.com/?q=44.8996,-110.1223">⌖ Open in Maps</a></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="fri9"><label class="check" for="fri9">✓</label>
+<details><summary><span class="time" data-m="990" data-e="1215"><small class="tl">arr</small><b>4:30</b><small>PM</small><em><small class="tl">lv</small><span class="ev">8:15</span></em></span>
+<span class="stop-main"><span class="title">LAMAR VALLEY — the evening shift</span>
+<span class="chips"><span class="chip meal">Dinner · cooler</span><span class="chip drive">→ 15 min</span><span class="chip">until sunset 8:15</span></span><span class="flow">3 hr 45 in the valley · <em>then the dark drive home</em></span></span></summary>
+<div class="body"><div class="lookfor"><b>Look for</b>Bison herds backlit after 6:30 · pronghorn on the flats · wolves at dusk (the lottery) · grizzly at treeline · scan with grandpa's binoculars</div><p>Cruise the valley floor slow, then park where the spotting scopes cluster (pullouts between Slough Creek and Lamar Canyon). Walk up, say "anything moving?" — they'll share the scope.</p><p>Cooler dinner from the truck bed. Nearly four hours of just being here. The most in-the-experience block of the trip.</p><p><b>Beta:</b> The prime stretch is the ~6 miles between Lamar Canyon and Slough Creek — big gravel pullouts on both sides. Park FULLY off pavement, engine off, voices low. Glass the river corridor and the treeline seams, not the open middle — that’s where things move at dusk. Vault toilets at the Slough Creek road junction and Lamar Canyon. If scopes cluster somewhere, that’s not a suggestion, it’s intel: join them.</p><a class="maplink" href="https://maps.google.com/?q=44.8977,-110.2245">⌖ Open in Maps</a></div></details></div>
+
+<div class="stop" data-f><input class="ck" type="checkbox" id="fri10"><label class="check" for="fri10">✓</label>
+<details><summary><span class="time" data-m="1215" data-e="1335"><small class="tl">dep</small><b>8:15</b><small>PM</small><em><small class="tl">arr</small><span class="ev">10:15</span></em></span>
+<span class="stop-main"><span class="title">Depart — Chief Joseph in the dark</span>
+<span class="chips"><span class="chip drive">~2 hrs</span><span class="chip">deer-speed</span></span><span class="flow"><em>2 hr drive → Cody, deer-speed</em></span></span></summary>
+<div class="body"><p>Elk own this road at night. Home ~10:15. Tomorrow departs at 6 <i>or</i> 7 — both pre-approved. Pack the small overnight bag before bed.</p></div></details></div>
+</section>
+
+<!-- ================= SAT ================= -->
+<section id="sat" data-date="2026-08-08" data-shift>
+<div class="dayhead"><h2>Day 3 · Sat Aug 8 — Canyon + Washburn → Grant</h2>
+<div class="meta">~140 mi one-way · <b>~3 hr 50 driving</b> · out the door 7:30 · sleep: <b>Grant Village</b></div>
+<div class="shiftrow"></div>
+<div class="shnote">Slept in? Pick a shift — every time below moves with it.</div></div>
+
+<div class="kit"><b>Today’s kit</b>Overnight bag (change + toiletries) · swimsuit + microfiber towel + sandals (plunge tonight, Firehole tomorrow) · daypack: 3L water, summit lunch, shell, fleece, beanie, sunscreen, bear spray, headlamp, charger, binos · cooler restocked + fresh ice · buy tomorrow's coffee + grab-breakfast tonight</div>
+<div class="stop"><input class="ck" type="checkbox" id="sat0"><label class="check" for="sat0">✓</label>
+<details><summary><span class="time" data-m="450" data-e="515"><small class="tl">dep</small><b>7:30</b><small>AM</small><em><small class="tl">arr</small><span class="ev">8:35</span></em></span>
+<span class="stop-main"><span class="title">Depart with overnight bag</span>
+<span class="chips"><span class="chip meal">Breakfast · quick</span><span class="chip">sleep-in default</span></span><span class="flow"><em>65 min drive → East Entrance</em></span></span></summary>
+<div class="body"><p>Alarm at 7 — the sleep-in is now the plan, not the concession. (Feeling crazy? The −90 button on the site restores the 6:00 launch and buys back Lake Butte + emptier boardwalks.) Big duffel stays at the house. Cooler restocked, daypack loaded: water ×3, lunch, shell, fleece, beanie, headlamp, spray, charger, binoculars.</p></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="sat1"><label class="check" for="sat1">✓</label>
+<details><summary><span class="time" data-m="515" data-e="535"><small class="tl">arr</small><b>8:35</b><small>AM</small><em><small class="tl">lv</small><span class="ev">8:55</span></em></span>
+<span class="stop-main"><span class="title">East Entrance + Sylvan Pass</span>
+<span class="chips"><span class="chip drive">→ 65 min</span></span><span class="flow">20 min gate + pass · <em>50 min drive → Mud Volcano</em></span></span></summary>
+<div class="body"><div class="lookfor"><b>Look for</b>Grizzly on the Sylvan corridor — one of the park's best roadside bear stretches</div><p>Show the pass. If on the early schedule: <b>Lake Butte Overlook</b> spur (+15 min) — whole lake below, and on clear mornings the Tetons on the far southern horizon. Wave hello.</p><a class="maplink" href="https://maps.google.com/?q=44.4933,-110.2668">⌖ Lake Butte Overlook</a></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="sat2"><label class="check" for="sat2">✓</label>
+<details><summary><span class="time" data-m="585" data-e="625"><small class="tl">arr</small><b>9:45</b><small>AM</small><em><small class="tl">lv</small><span class="ev">10:25</span></em></span>
+<span class="stop-main"><span class="title">Mud Volcano + Dragon's Mouth</span>
+<span class="chips"><span class="chip drive">→ 50 min</span><span class="chip">full loop ~40 min</span></span><span class="flow">40 min boardwalk loop · <em>20 min drive → Canyon</em></span></span></summary>
+<div class="body"><div class="lookfor"><b>Look for</b>Dragon's Mouth growling (steam collapsing in the cave) · bison lounging on warm ground</div><p>The park's most acidic, gassiest ground. Do the hillside stairs, not just the roadside pots.</p><p><b>Beta:</b> Lot is on the west side of the road — Dragon’s Mouth is 100 yards from your bumper, growling. Walk the loop CLOCKWISE: up the stairs to Churning Caldron and Sour Lake first, down past Black Dragon’s Caldron. Bison bed down on the warm ground here and have right-of-way everywhere — 25 yards minimum, reroute around them.</p><div class="trail"><b class="h">Trail · Mud Volcano Loop · 0.7 mi · ~35 min</b>Clockwise from the lot: stairs up to Churning Caldron and Sour Lake on the ridge, then down past Black Dragon’s Caldron and Mud Geyser, finishing at Dragon’s Mouth beside the parking.</div><a class="maplink" href="https://maps.google.com/?q=44.6249,-110.4382">⌖ Open in Maps</a></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="sat3"><label class="check" for="sat3">✓</label>
+<details><summary><span class="time" data-m="645" data-e="795"><small class="tl">arr</small><b>10:45</b><small>AM</small><em><small class="tl">lv</small><span class="ev">1:15</span><small class="m2">PM</small></em></span>
+<span class="stop-main"><span class="title">GRAND CANYON — walked, not driven</span>
+<span class="chips"><span class="chip drive">→ 20 min</span><span class="chip">~2.5 hrs</span></span><span class="flow">2 hr 30 walking the rims · <em>12 min drive → Dunraven Pass</em></span></span></summary>
+<div class="body"><div class="lookfor"><b>Look for</b>Ospreys nesting on canyon spires · mid-morning rainbows in the falls mist</div><p><b>South rim:</b> Artist Point (the postcard — 308-ft falls in yellow-pink hydrothermally cooked rock), then the <b>Point Sublime trail</b> — the ¾-mile 95% of visitors skip.</p><p><b>North rim</b> (10-min drive): Red Rock / Lookout Point, Inspiration Point, then the <b>Brink of the Lower Falls</b> switchbacks — stand on top of the falls as the river goes over under your feet. Steep back up; the Hokas' first real test.</p><p><b>Beta:</b> Sequence: South Rim Drive to the Artist Point lot (biggest in the area), do the Point Sublime out-and-back from the far end of the viewing deck, then drive back around to the one-way North Rim Drive — it serves Brink of the Lower Falls first, then Lookout/Red Rock, then Inspiration Point. The Brink trail drops ~600 ft in switchbacks; count on 20 sweaty minutes back up.</p><div class="trail"><b class="h">Trail · Canyon rims · 4 short walks · ~3.5 mi total · ~2.5 hr</b>1) Artist Point: 200-yd paved path from the lot, then the Point Sublime Trail east from the far end of the deck — 1.25 mi one-way, level rim walking; out-and-back as far as it’s giving (~50 min full RT). 2) Drive to the one-way North Rim Dr: Brink of the Lower Falls Trail, 0.7 mi RT, ~600 ft of switchbacks, 35–40 min. 3) Lookout Point (steps from its lot); the Red Rock Point drop below it is 0.4 mi RT / ~30 min — optional, skip if the legs are budgeting for Washburn. 4) Inspiration Point: 5–10 min from the last lot.</div><a class="maplink" href="https://maps.google.com/?q=44.7201,-110.4794">⌖ Artist Point</a></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="sat4"><label class="check" for="sat4">✓</label>
+<details><summary><span class="time" data-m="810" data-e="1000"><small class="tl">arr</small><b>1:30</b><small>PM</small><em><small class="tl">lv</small><span class="ev">4:40</span></em></span>
+<span class="stop-main"><span class="title">Mount Washburn — summit lunch</span>
+<span class="chips"><span class="chip meal">Lunch · summit</span><span class="chip drive">→ 12 min</span><span class="chip">6.4 mi RT</span><span class="chip">down by ~4:45</span></span><span class="flow">3 hr 10 hike + summit lunch · <em>20 min drive → Hayden</em></span></span></summary>
+<div class="body"><div class="lookfor"><b>Look for</b>Bighorn sheep near the summit (resident band) · marmots · storm clouds after 2 = descend</div><p>~1,400 ft on a wide old road-grade. <b>Eat lunch on top, 30 unhurried minutes</b> — 10,243 ft, the whole park in 360°, Tetons on the horizon. This week's forecast shows 0% storm chance, so the afternoon summit is safe; if clouds are stacking by noon anyway, invert the day — hike first, canyon after.</p><p><b>Beta:</b> Dunraven Pass lot sits right on the road summit and fills by late morning — at your 1:30 arrival, circle patiently or use the overflow pullouts just north. The trail is the old road grade the whole way: wide, steady, impossible to lose. Bighorns usually hang on the ridgeline just below the summit switchbacks. The fire lookout on top has a public observation room, restroom, and windbreak — lunch inside if the wind’s rude.</p><div class="trail"><b class="h">Trail · Mount Washburn Trail via Dunraven Pass · 6.4 mi RT · ~1,400 ft · ~3 hr with lunch</b>One obvious old road-grade the entire way — broad switchbacks up the south ridge, no junctions to miss (a spur merges in from the Chittenden Road side near the top; just keep climbing). Budget ~1 hr 45 up, 30 on the summit, ~1 hr down. Views open at the first switchback and never stop.</div><p><i>Sacrifice-order note: skipping the summit entirely is pre-approved. Canyon + early check-in is still a great day. The crown jewel is tomorrow regardless.</i></p><a class="maplink" href="https://maps.google.com/?q=44.7796,-110.4494">⌖ Dunraven Pass trailhead</a></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="sat5"><label class="check" for="sat5">✓</label>
+<details><summary><span class="time" data-m="1020" data-e="1055"><small class="tl">arr</small><b>5:00</b><small>PM</small><em><small class="tl">lv</small><span class="ev">5:35</span></em></span>
+<span class="stop-main"><span class="title">Hayden Valley — golden hour, southbound</span>
+<span class="chips"><span class="chip drive">→ 20 min</span><span class="chip">rolling slow</span></span><span class="flow">35 min rolling the valley · <em>25 min drive → Lake Hotel</em></span></span></summary>
+<div class="body"><div class="lookfor"><b>Look for</b>Bison jams (pay the toll happily) · elk + grizzly on far treelines</div><p>Windows down through the old lakebed. The dusk pass happens en route — no backtracking.</p><p><b>Beta:</b> The unofficial ‘Grizzly Overlook’ pullout — west side, ~4 miles south of Canyon, the one with the long wooden rail — is where the evening scope crowd sets up. If cars are stacked at any pullout, that’s a wildlife jam: roll past slow or join, never stop in the lane.</p></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="sat6"><label class="check" for="sat6">✓</label>
+<details><summary><span class="time" data-m="1080" data-e="1150"><small class="tl">arr</small><b>6:00</b><small>PM</small><em><small class="tl">lv</small><span class="ev">7:10</span></em></span>
+<span class="stop-main"><span class="title">Lake Yellowstone Hotel — porch dinner</span>
+<span class="chips"><span class="chip meal">Dinner</span><span class="chip drive">→ 25 min</span><span class="chip">unhurried</span></span><span class="flow">1 hr 10 porch dinner · <em>35 min drive → Grant</em></span></span></summary>
+<div class="body"><p>1891 colonnade, sunroom, sometimes a string quartet. Dinner, not a stop.</p><p><b>Beta:</b> Park in the angle spots out front. The formal dining room takes reservations (307-344-7311 same-day sometimes works) but the sunroom bar seats walk-ins with the same lake view — order there, zero planning required. The porch rockers out front are free to anyone; claim two for the pre-dinner sit.</p><a class="maplink" href="https://maps.google.com/?q=Lake+Yellowstone+Hotel">⌖ Open in Maps</a></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="sat7"><label class="check" for="sat7">✓</label>
+<details><summary><span class="time" data-m="1185"><small class="tl">arr</small><b>7:45</b><small>PM</small></span>
+<span class="stop-main"><span class="title">Grant Village — CHECK IN</span>
+<span class="chips"><span class="chip swim">Swim #1 · optional</span><span class="chip drive">→ 35 min</span><span class="chip">conf 20977608</span></span><span class="flow">evening is yours — plunge + stars · sleep here</span></span></summary>
+<div class="body"><p>Deluxe Lodge, 1 Queen. Check-in desk after 4. Solve tomorrow's coffee tonight (thermos + cooler — nothing opens early).</p><p><b>Swim #1 (optional): the lakeshore plunge.</b> Yellowstone Lake runs ~55–60° — this is a 30-second in-and-out off the Grant shore before dinner settles, not a swim. Cold-shock rules: waist-deep, dunk, out, towel, bragging rights forever.</p><p><b>Beta:</b> Check-in is the registration building as you enter the village. For the plunge + sky show: the beach by the amphitheater/marina area is a 5-minute walk east from the lodge buildings — sand entry, no rocks. Face south over the water for the Milky Way core; give your eyes 10 dark minutes and it triples.</p><p><b>~10:00 PM: walk to the lakeshore and look up.</b> One of the darkest skies in the lower 48 — the Milky Way core is out. Ten minutes minimum. Then bed.</p><a class="maplink" href="https://maps.google.com/?q=24+Rainbow+Loop+Grant+Village+Yellowstone">⌖ 24 Rainbow Loop</a></div></details></div>
+</section>
+
+<!-- ================= SUN ================= -->
+<section id="sun" data-date="2026-08-09" data-shift>
+<div class="dayhead"><h2>Day 4 · Sun Aug 9 — Geyser Dawn Sweep → Home → Mustangs</h2>
+<div class="meta">~215 mi · <b>~4 hr 15 driving</b> in six short hops · the crown-jewel day · sleep: Bleistein</div>
+<div class="shiftrow"></div>
+<div class="shnote">Slept in? Pick a shift. Golden-hour stops stay put.</div></div>
+
+<div class="kit"><b>Today’s kit</b>Thermos coffee + packed breakfast · swimsuit + towel + sandals (Firehole) · water ×3 · sunscreen + SPF chapstick · bear spray (Fairy Falls walk) · binoculars for the mustangs · cooler lunch</div>
+<div class="stop"><input class="ck" type="checkbox" id="sun0"><label class="check" for="sun0">✓</label>
+<details><summary><span class="time" data-m="400" data-e="405"><small class="tl">dep</small><b>6:40</b><small>AM</small><em><small class="tl">arr</small><span class="ev">6:45</span></em></span>
+<span class="stop-main"><span class="title">Depart Grant</span>
+<span class="chips"><span class="chip meal">Breakfast · packed</span><span class="chip">coffee from thermos</span></span><span class="flow"><em>5 min drive → West Thumb</em></span></span></summary>
+<div class="body"><p>Checkout is a key-drop. Five minutes to the reason for everything.</p></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="sun1"><label class="check" for="sun1">✓</label>
+<details><summary><span class="time" data-m="405" data-e="445"><small class="tl">arr</small><b>6:45</b><small>AM</small><em><small class="tl">lv</small><span class="ev">7:25</span></em></span>
+<span class="stop-main"><span class="title">WEST THUMB — dawn steam</span>
+<span class="chips"><span class="chip drive">→ 5 min</span><span class="chip">~1 hr</span></span><span class="flow">40 min empty boardwalk · <em>35 min drive → Old Faithful</em></span></span></summary>
+<div class="body"><div class="lookfor"><b>Look for</b>Black Pool's impossible blue · Abyss Pool · Fishing Cone in the lake · elk browsing basin margins</div><p><b>The moment the room bought.</b> Fork RIGHT from the parking path (friend's beta) down to the lakeside walk first. Steam columns off springs draining into the cold lake, low sun across the water, boardwalk empty, ground gurgling.</p><p><b>Beta:</b> One lot at the end of the short spur; boardwalk is a figure-8 — your fork-right move puts you on the lakeside leg first: Fishing Cone sits just offshore, then Black Pool and Abyss Pool (the two impossible blues) anchor the far corner. Full walk is ~0.6 mi. Elk often graze the basin edge at this hour — give them the boardwalk if they’re on it.</p><div class="trail"><b class="h">Trail · West Thumb boardwalk · 0.6 mi figure-8 · flat · 40–60 min</b>Fork RIGHT onto the lakeside leg first (Fishing Cone, Black Pool, Abyss Pool), then take the inner loop on the way back to the lot.</div><a class="maplink" href="https://maps.google.com/?q=44.4166,-110.5732">⌖ Open in Maps</a></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="sun2"><label class="check" for="sun2">✓</label>
+<details><summary><span class="time" data-m="480" data-e="575"><small class="tl">arr</small><b>8:00</b><small>AM</small><em><small class="tl">lv</small><span class="ev">9:35</span></em></span>
+<span class="stop-main"><span class="title">Old Faithful + Upper Geyser Basin</span>
+<span class="chips"><span class="chip meal">Huckleberry latte</span><span class="chip drive">→ 35 min</span><span class="chip">~1.5 hrs</span></span><span class="flow">1 hr 35 basin + Inn + latte · <em>15 min drive → Fairy Falls lot</em></span></span></summary>
+<div class="body"><div class="lookfor"><b>Look for</b>Beehive Geyser if its indicator's going (better show) · Firehole River steaming</div><p>Over Craig Pass — the Continental Divide, twice. Check the eruption board on arrival, walk <b>Geyser Hill</b> while waiting. Then the Inn's 1904 log lobby — 76 feet of lodgepole gothic — and the <b>huckleberry latte</b> at the espresso cart. Buses land ~9:30 as you leave.</p><p><b>Beta:</b> Park in the enormous main lot, then check the prediction board in the visitor center window first — it sets your sequence. Geyser Hill is the 1.3-mi boardwalk loop ACROSS the footbridge behind Old Faithful — if Beehive’s indicator cone is spouting, drop everything and wait (10–15 min warning, taller than Old Faithful, no crowd). The Inn is free to wander: lobby, mezzanine, and the espresso cart is on the lobby’s left side.</p><a class="maplink" href="https://maps.google.com/?q=44.4605,-110.8281">⌖ Open in Maps</a></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="sun3"><label class="check" for="sun3">✓</label>
+<details><summary><span class="time" data-m="590" data-e="630"><small class="tl">arr</small><b>9:50</b><small>AM</small><em><small class="tl">lv</small><span class="ev">10:30</span></em></span>
+<span class="stop-main"><span class="title">GRAND PRISMATIC — Fairy Falls Overlook</span>
+<span class="chips"><span class="chip drive">→ 15 min</span><span class="chip">0.6 mi walk</span><span class="chip">~45 min</span></span><span class="flow">40 min walk + overlook · <em>15 min drive → Firehole Canyon</em></span></span></summary>
+<div class="body"><p>The single most otherworldly color you will ever see outdoors: 370 ft of boiling turquoise ringed in orange — thermophile bacteria mats, each ring a temperature band. Sun's high enough to fire it; the mob is 45 minutes behind you.</p><p><b>Beta:</b> Use the Fairy Falls TRAILHEAD lot, 1 mi south of the Midway lot everyone fights over. Cross the steel bridge, follow the wide gravel road 0.6 mi, then the signed overlook spur climbs left ~100 ft to the platform. Same way back. Total ~1.5 mi — sandals fine, but the boardwalk-brain move is real shoes.</p><div class="trail"><b class="h">Trail · Grand Prismatic Overlook · 1.6 mi RT · ~105 ft · 40–50 min</b>Cross the steel bridge, follow the wide old roadbed 0.6 mi, then the signed overlook spur climbs LEFT ~0.2 mi to the platform. Running ahead of schedule? The main trail continues 0.8 mi to Fairy Falls itself — a 197-ft ribbon — adding ~1.6 mi RT / 45 min.</div><a class="maplink" href="https://maps.google.com/?q=44.5155,-110.8325">⌖ Fairy Falls trailhead</a></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="sun4"><label class="check" for="sun4">✓</label>
+<details><summary><span class="time" data-m="645" data-e="680"><small class="tl">arr</small><b>10:45</b><small>AM</small><em><small class="tl">lv</small><span class="ev">11:20</span></em></span>
+<span class="stop-main"><span class="title">Firehole Canyon — Swim #2 (if open)</span>
+<span class="chips"><span class="chip swim">Swim #2 · verify first</span><span class="chip drive">→ 15 min</span><span class="chip">45 min</span></span><span class="flow">35 min swim window · <em>40 min drive → Norris</em></span></span></summary>
+<div class="body"><p>Thermally-warmed river (high 70s–80s°) in a lava canyon — the one warm swim in the park. <b>It was closed ALL of 2025</b> for high water, and 2026 status was unconfirmed at press time, so verify before counting on it:</p><p><b>1.</b> Park app / nps.gov Alerts while you still have signal Saturday · <b>2.</b> Ask the ranger at the East gate or the Grant desk at check-in — they'll know instantly · <b>3.</b> The lot itself: towels on rocks = yes, barricade = scenic drive.</p><p>Drive the 2-mi Firehole Canyon spur regardless — canyon walls + Firehole Falls make it worth it even dry. If swimming: real current, no lifeguard, stay in the main pool with everyone else, sandals on (volcanic rock bottom).</p><a class="maplink" href="https://maps.google.com/?q=Firehole+Canyon+Drive+swimming+area">⌖ Open in Maps</a></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="sun5"><label class="check" for="sun5">✓</label>
+<details><summary><span class="time" data-m="720" data-e="830"><small class="tl">arr</small><b>12:00</b><small>PM</small><em><small class="tl">lv</small><span class="ev">1:50</span></em></span>
+<span class="stop-main"><span class="title">NORRIS GEYSER BASIN — both loops</span>
+<span class="chips"><span class="chip drive">→ 40 min</span><span class="chip">~2 hrs</span></span><span class="flow">1 hr 50 both loops · <em>25 min drive → Canyon fuel stop</em></span></span></summary>
+<div class="body"><div class="lookfor"><b>Look for</b>Steamboat's runoff channel (world's tallest geyser) · the hiss of Porcelain Basin</div><p>The finale — hottest, oldest, most volatile ground in the park. <b>Porcelain Basin first</b>: the alien one, a treeless bowl of vents and milky-blue runoff. Then Back Basin past Steamboat. Artists Paintpots (1-mi loop) optional en route if ahead of schedule.</p><p><b>Beta:</b> Both loops leave from the little museum at the lot: Porcelain Basin (0.8 mi) drops north into the alien bowl — do it first — then Back Basin (1.5 mi) loops south past Steamboat (check its runoff channel: wet and steaming means it’s been active) and Echinus. Noon lot takes patience; a spot always opens. Bookstore at the museum for the one souvenir that’s not junk.</p><div class="trail"><b class="h">Trail · Norris loops · 2.3 mi total · ~1.5–2 hr</b>Porcelain Basin loop first: 0.8 mi dropping north from the museum into the bowl, 30–40 min. Then the Back Basin loop: 1.5 mi — walk it counterclockwise so Steamboat and Emerald Spring come early, 45–60 min.</div><a class="maplink" href="https://maps.google.com/?q=44.7264,-110.7031">⌖ Open in Maps</a></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="sun6"><label class="check" for="sun6">✓</label>
+<details><summary><span class="time" data-m="855" data-e="1010"><small class="tl">dep</small><b>2:15</b><small>PM</small><em><small class="tl">arr</small><span class="ev">4:50</span></em></span>
+<span class="stop-main"><span class="title">Homebound — Canyon fuel → Hayden → East gate</span>
+<span class="chips"><span class="chip meal">Lunch · Canyon</span><span class="chip drive">~2 hrs 10 total</span></span><span class="flow"><em>2 hr 35 drive → Cody, fuel + Hayden pass en route</em></span></span></summary>
+<div class="body"><p>Snack + gas at Canyon Village, one last Hayden pass (bison don't check the clock), out over Sylvan. Cody ~4:50.</p><p><b>Beta:</b> Canyon Village has gas AND the general store — this is the Wilcoxson’s huckleberry ice cream stop (92-year park tradition, huckleberry is the correct flavor). Ten minutes, then wheels south.</p></div></details></div>
+
+<div class="stop" data-f><input class="ck" type="checkbox" id="sun7"><label class="check" for="sun7">✓</label>
+<details><summary><span class="time" data-m="1080" data-e="1235"><small class="tl">arr</small><b>6:00</b><small>PM</small><em><small class="tl">lv</small><span class="ev">8:35</span></em></span>
+<span class="stop-main"><span class="title">McCullough Peaks mustangs — golden hour</span>
+<span class="chips"><span class="chip drive">→ 25 min</span><span class="chip">dirt roads</span><span class="chip">skip if rain</span></span><span class="flow">2 hr 35 golden hour with the horses · <em>25 min drive → downtown</em></span></span></summary>
+<div class="body"><div class="lookfor"><b>Look for</b>Wild horse bands · stallion posturing · foals · banded clay lighting up at dusk</div><p>East on 14/16/20 to the BLM two-tracks. The trip's last new landscape — desert badlands, nobody there.</p><p><b>Beta:</b> Take US 14/16/20 east ~13 miles, then the signed BLM two-track entrances on the north side (Whistle Creek area). Any dry two-track works — drive until badlands surround you, then stop and glass the ridgelines and low draws; the bands move toward water at dusk. Stay 100+ ft from horses (they’ll let you closer; don’t). High-clearance happy, but turn around at anything rutted — no cell service out here.</p><a class="maplink" href="https://maps.google.com/?q=44.5583,-108.7379">⌖ Open in Maps</a></div></details></div>
+
+<div class="stop" data-f><input class="ck" type="checkbox" id="sun8"><label class="check" for="sun8">✓</label>
+<details><summary><span class="time" data-m="1260"><small class="tl">arr</small><b>9:00</b><small>PM</small></span>
+<span class="stop-main"><span class="title">Walk downtown — Silver Dollar or Chamberlin</span>
+<span class="chips"><span class="chip meal">Dinner · downtown</span></span><span class="flow">nightcap · walk home</span></span></summary>
+<div class="body"><p>Live music with the wranglers, or the quiet bar where Hemingway signed the register in '32. You've earned either.</p></div></details></div>
+</section>
+
+<!-- ================= MON ================= -->
+<section id="mon" data-date="2026-08-10">
+<div class="dayhead"><h2>Day 5 · Mon Aug 10 — Chief Joseph + Beauty Lake with Mom + Rodeo</h2>
+<div class="meta">~155 mi · <b>~3 hr 40 driving</b> · the gift day · sleep: Bleistein</div></div>
+
+<div class="kit"><b>Today’s kit</b>Swimsuits worn under clothes · towels ×2 · water shoes/sandals · dry change for after · picnic makings + water ×4 · warm layer for BOTH of you (9,000 ft runs 20° cooler) · walking shoes · sunscreen + hats · binoculars · phone charged for photos · tonight: bags zipped, bear spray + leftover food staged with a note</div>
+<div class="stop"><input class="ck" type="checkbox" id="mon0"><label class="check" for="mon0">✓</label>
+<details><summary><span class="time" data-m="540" data-e="660"><small class="tl">arr</small><b>9:00</b><small>AM</small><em><small class="tl">lv</small><span class="ev">11:00</span></em></span>
+<span class="stop-main"><span class="title">Slow morning — coffee, reset</span>
+<span class="chips"><span class="chip meal">Breakfast · slow</span></span><span class="flow">2 hr yours · <em>then mom lands</em></span></span></summary>
+<div class="body"><p>Sleep in. Optional solo move: the Buffalo Bill Center opens at 8 — an 8:30–10:30 visit fits before mom lands if the museum itch needs scratching. Otherwise it’s the rain plan.</p></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="mon1"><label class="check" for="mon1">✓</label>
+<details><summary><span class="time" data-m="660" data-e="735"><small class="tl">arr</small><b>11:00</b><small>AM</small><em><small class="tl">lv</small><span class="ev">12:15</span><small class="m2">PM</small></em></span>
+<span class="stop-main"><span class="title">Mom lands — lunch + picnic grab</span>
+<span class="chips"><span class="chip meal">Lunch · downtown</span></span><span class="flow">1 hr 15 lunch + gather · <em>then roll out</em></span></span></summary>
+<div class="body"><p>Quick downtown lunch, grab picnic supplies for the lake (or raid the cooler stash). Trip becomes a duet.</p></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="mon2"><label class="check" for="mon2">✓</label>
+<details><summary><span class="time" data-m="735" data-e="790"><small class="tl">dep</small><b>12:15</b><small>PM</small><em><small class="tl">arr</small><span class="ev">1:10</span></em></span>
+<span class="stop-main"><span class="title">Roll out — Chief Joseph, your road</span>
+<span class="chips"><span class="chip drive">55 min</span></span><span class="flow"><em>55 min drive → Dead Indian Pass</em></span></span></summary>
+<div class="body"><p>Fourth time up for you — first for her. You’re the guide now: point at where the wolves showed (or didn’t).</p></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="mon3"><label class="check" for="mon3">✓</label>
+<details><summary><span class="time" data-m="790" data-e="805"><small class="tl">arr</small><b>1:10</b><small>PM</small><em><small class="tl">lv</small><span class="ev">1:25</span></em></span>
+<span class="stop-main"><span class="title">Dead Indian Pass Overlook</span>
+<span class="chips"><span class="chip">zero-effort jaw-drop</span></span><span class="flow">15 min showing her the view · <em>20 min drive → Sunlight bridge</em></span></span></summary>
+<div class="body"><p>She steps out of the truck into the whole Clarks Fork canyon and Sunlight Basin. Midday light — different show than your morning passes.</p><a class="maplink" href="https://maps.google.com/?q=44.7448,-109.3862">⌖ Open in Maps</a></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="mon4"><label class="check" for="mon4">✓</label>
+<details><summary><span class="time" data-m="825" data-e="830"><small class="tl">arr</small><b>1:45</b><small>PM</small><em><small class="tl">lv</small><span class="ev">1:50</span></em></span>
+<span class="stop-main"><span class="title">Sunlight Gorge Bridge</span>
+<span class="chips"><span class="chip drive">→ 20 min</span><span class="chip">2-min gasp</span></span><span class="flow">5 min gasp on the walkway · <em>40 min drive → Beartooth Lake trailhead</em></span></span></summary>
+<div class="body"><p>Highest bridge in Wyoming, over a slot gorge that makes everyone lean over the rail. New for you too — Friday skipped it on purpose.</p><p><b>Beta:</b> Small parking pull-off on the west side just past the bridge — walk back ACROSS the bridge on the walkway and look straight down into the slot. 300 feet of gorge under your feet. Two minutes, permanent memory.</p><a class="maplink" href="https://maps.google.com/?q=Sunlight+Creek+Bridge+WY">⌖ Open in Maps</a></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="mon5"><label class="check" for="mon5">✓</label>
+<details><summary><span class="time" data-m="870" data-e="975"><small class="tl">arr</small><b>2:30</b><small>PM</small><em><small class="tl">lv</small><span class="ev">4:15</span></em></span>
+<span class="stop-main"><span class="title">Beauty Lake walk — Beartooth Lake trailhead</span>
+<span class="chips"><span class="chip swim">Swim #3 · the headliner</span><span class="chip meal">Snacks · lakeside</span><span class="chip drive">→ 40 min</span><span class="chip">turn around anytime</span></span><span class="flow">1 hr 45 walk + swim + picnic · <em>~2 hr drive home (Irma at 6:45)</em></span></span></summary>
+<div class="body"><div class="lookfor"><b>Look for</b>Peak August wildflowers · Beartooth Butte’s striped face over the water · marmots on the granite · trout rising in Beauty Lake</div><p>Gentle rolling trail through meadows at 9,000 ft — gorgeous within ten minutes, Beauty Lake’s granite bowl a mile-plus in. <b>She sets the pace and the turnaround.</b></p><p><b>THE SWIM:</b> Beauty Lake is the swimmable one up here — shallower than its neighbors, so the top few feet genuinely warm by August afternoons (brisk-but-doable, not plunge-only). Your 2:30–4:15 window is the warmest water of the day. Look for the sandy/granite shelf entries on the near shore — walk-in, no rock scramble. Suits under clothes so there’s no trailhead changing act; mom can wade the shelf while you swim; stay near shore (it’s still 9,400 ft — cold makes swimmers overestimate themselves). Out, towel, dry layer immediately: the breeze up there turns wet-and-happy into cold-and-done in five minutes.</p><p>Then the picnic on the granite, feet drying in the sun, trout rising. That’s the trip’s highlight reel, right there.</p><p><b>Beta:</b> Trailhead is at the Beartooth Lake boat launch/campground turnoff — park by the ramp. The Beauty Lake trail starts along the lake’s east shore, crosses the inlet creek early (rock-hop or ankle splash by August — water shoes shine here), then climbs gently through the meadows. At the junction, stay RIGHT for Beauty Lake. The sandy entries are where the trail first meets the lake.</p><div class="trail"><b class="h">Trail · Beauty Lake Trail · ~2.8 mi RT · ~300 ft · ~1.5 hr walking at mom pace</b>From the boat launch, follow Beartooth Lake’s east shore north ~½ mi · rock-hop the inlet creek (water shoes shine) · cross the wildflower meadows · at the signed junction around the 1-mi mark stay RIGHT · Beauty Lake arrives ~1.4 mi in, and the first shoreline the trail touches has the sandy swim entries. Same trail back — and remember, turning around early anywhere on this is a complete hike.</div><p><i>Legs vote no at the trailhead? Clay Butte fire lookout is 5 min further — drive-up 360° panorama, hundred-yard walk. The day delivers at zero hiking.</i></p><a class="maplink" href="https://maps.google.com/?q=Beartooth+Lake+Trailhead">⌖ Open in Maps</a></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="mon6"><label class="check" for="mon6">✓</label>
+<details><summary><span class="time" data-m="1125" data-e="1180"><small class="tl">arr</small><b>6:45</b><small>PM</small><em><small class="tl">lv</small><span class="ev">7:40</span></em></span>
+<span class="stop-main"><span class="title">Irma Hotel — dinner</span>
+<span class="chips"><span class="chip meal">Dinner</span><span class="chip drive">home by ~6:15</span></span><span class="flow">55 min dinner · <em>5 min drive → rodeo grounds</em></span></span></summary>
+<div class="body"><p>Buffalo Bill’s own hotel, prime rib, the cherrywood bar. She flew in this morning and ends the day having hiked the Beartooths — that’s a story she keeps.</p><a class="maplink" href="https://maps.google.com/?q=Irma+Hotel+Cody+WY">⌖ Open in Maps</a></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="mon7"><label class="check" for="mon7">✓</label>
+<details><summary><span class="time" data-m="1185" data-e="1320"><small class="tl">arr</small><b>7:45</b><small>PM</small><em><small class="tl">lv</small><span class="ev">10:00</span></em></span>
+<span class="stop-main"><span class="title">Cody Nite Rodeo</span>
+<span class="chips"><span class="chip">8:00 start</span><span class="chip">Buzzard’s Roost side</span></span><span class="flow">2 hr 15 of rodeo · <em>then home to pack</em></span></span></summary>
+<div class="body"><p>Landing right at showtime instead of early — fine, it runs nightly and the seats find you. The last night: tundra, wolves-country, canyon, geysers, mustangs, an alpine lake with mom — and now a rodeo.</p><p><b>Beta:</b> Gates and ticket window at Stampede Park, 5 min west on Sheridan — buy at the gate, cash or card. Buzzard’s Roost is the WEST grandstand: evening sun behind you, chutes in front. Get mom a seat back from the rail if dust bothers her; get yourselves there by 7:45 for the good rows.</p><a class="maplink" href="https://maps.google.com/?q=Cody+Nite+Rodeo">⌖ Open in Maps</a></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="mon8"><label class="check" for="mon8">✓</label>
+<details><summary><span class="time" data-m="1320"><small class="tl">at</small><b>10:00</b><small>PM</small></span>
+<span class="stop-main"><span class="title">Pack — truck goes back in the morning</span><span class="flow">bags zipped · lights out</span></span></summary>
+<div class="body"><p><b>Bear spray stays at the house with a note</b> — it cannot fly, even checked. Leftover cooler food too. Bags zipped tonight; drop-off deadline is 9:30 AM.</p></div></details></div>
+</section>
+
+<!-- ================= TUE ================= -->
+<section id="tue" data-date="2026-08-11">
+<div class="dayhead"><h2>Day 6 · Tue Aug 11 — Travel Home</h2>
+<div class="meta">COD → DEN → EWR → GSP · <b>land 11:03 PM</b></div></div>
+
+<div class="kit"><b>Today’s kit</b>Boarding passes · every charger out of the walls · full tank before drop-off · Turo exit photos + fuel-gauge shot · Denver food money · patience for the EWR sprint</div>
+<div class="stop"><input class="ck" type="checkbox" id="tue0"><label class="check" for="tue0">✓</label>
+<details><summary><span class="time" data-m="495" data-e="580"><small class="tl">arr</small><b>8:15</b><small>AM</small><em><small class="tl">lv</small><span class="ev">9:40</span></em></span>
+<span class="stop-main"><span class="title">Fill the tank → drop the truck at COD</span>
+<span class="chips"><span class="chip">full tank required</span><span class="chip">drop by 9:30</span><span class="chip">exit photos</span></span><span class="flow">1 hr 25 gas + drop-off + exit photos · <em>walk into the terminal</em></span></span></summary>
+<div class="body"><p>Gas on Big Horn Ave ~8:15 (Turo requires full at return), then the truck goes back to <b>2101 Roger Sedam Drive</b> — keys per Amber's instructions, <b>final walkaround photos + fuel-gauge shot in the app</b>. An hour before the flight is genuinely plenty at COD.</p></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="tue1"><label class="check" for="tue1">✓</label>
+<details><summary><span class="time" data-m="610" data-e="715"><small class="tl">dep</small><b>10:10</b><small>AM</small><em><small class="tl">arr</small><span class="ev">11:55</span></em></span>
+<span class="stop-main"><span class="title">UA5079 → Denver 11:55</span>
+<span class="chips"><span class="chip meal">Lunch · Denver</span></span><span class="flow"><em>fly → Denver, land 11:55</em></span></span></summary>
+<div class="body"><p>Buy real food in Denver — the day is long.</p></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="tue2"><label class="check" for="tue2">✓</label>
+<details><summary><span class="time" data-m="822" data-e="1175"><small class="tl">dep</small><b>1:42</b><small>PM</small><em><small class="tl">arr</small><span class="ev">7:35</span></em></span>
+<span class="stop-main"><span class="title">UA1505 → Newark 7:35</span>
+<span class="chips"><span class="chip">⚠ 72-min connection</span></span><span class="flow"><em>fly → Newark · ⚠ 72-min connection</em></span></span></summary>
+<div class="body"><p><b>Check arrival + departure gates before landing. Walk with purpose.</b> If it goes sideways, United's next-morning GSP options are thin — patience is packed.</p></div></details></div>
+
+<div class="stop"><input class="ck" type="checkbox" id="tue3"><label class="check" for="tue3">✓</label>
+<details><summary><span class="time" data-m="1287" data-e="1383"><small class="tl">dep</small><b>9:27</b><small>PM</small><em><small class="tl">arr</small><span class="ev">11:03</span></em></span>
+<span class="stop-main"><span class="title">UA3681 → GSP 11:03 PM</span><span class="flow"><em>fly → GSP · home 11:03 PM</em></span></span></summary>
+<div class="body"><p>Home. Seven kinds of awe in the bag.</p></div></details></div>
+</section>
+
+<!-- ================= INFO ================= -->
+<section id="info">
+<div class="dayhead"><h2>Reference</h2><div class="meta">Bookings, orders, and the daypack</div></div>
+
+<div class="infoblock"><h3>Grant Village — Sat Aug 8</h3>
+<div class="kv"><span>Confirmation</span><span class="big">20977608</span></div>
+<div class="kv"><span>Room</span><span>Deluxe Lodge · 1 Queen (ADA roll-in shower)</span></div>
+<div class="kv"><span>Check-in / out</span><span>after 4:00 PM / by 11:00 AM</span></div>
+<div class="kv"><span>Rate</span><span>$321 + tax (~$370)</span></div>
+<div class="kv"><span>Address</span><span>24 Rainbow Loop, YNP</span></div>
+<div class="kv"><span>Lodges line</span><span>307-344-7311</span></div>
+</div>
+
+<div class="infoblock"><h3>Sacrifice order — pre-signed, zero guilt</h3>
+<ul><li>Trout Lake · Paintpots · Firehole swim — drop freely</li>
+<li>Lake Butte spur + the 6 AM start (7 is fine)</li>
+<li>Washburn summit — canyon-only Saturday is still a great day</li>
+<li><b>Nothing else.</b> Lamar, Grant, the dawn sweep, and mom day are the trip.</li></ul>
+</div>
+
+<div class="infoblock"><h3>Standing orders</h3>
+<ul><li>Tank above half · gas at Cooke City (Fri), Canyon (Sun), Cody (always)</li>
+<li>Bear spray on hip beyond boardwalks · stays in Cody with a note on the 10th</li>
+<li>No cotton on mountain days · layers for 40° dawns → 90° afternoons</li>
+<li>Text mom the day's shape each morning before losing signal</li>
+<li>Storms build after 2 PM — summit early, descend when clouds stack</li>
+<li>Dark drives at deer-speed: Chief Joseph (Fri), Wapiti (any late return)</li>
+<li>Odometer photo at pickup · cap 1,000 mi · plan ~735 (≈265-mi cushion)</li>
+<li>Thermopolis = rain card (~170 mi RT — still fits the cushion)</li></ul>
+</div>
+
+<div class="infoblock"><h3>Daypack loadout</h3>
+<ul><li>Water ×2 · lunch · rain shell · fleece · beanie</li>
+<li>Headlamp (fresh batteries) · bear spray · portable charger</li>
+<li>Grandpa's binoculars · swimsuit + small towel (Sunday)</li></ul>
+</div>
+
+<div class="infoblock"><h3>Numbers &amp; backups</h3>
+<ul><li>Xanterra lodges (Grant changes): 307-344-7311</li>
+<li>Turo host Amber texts pickup spot + keys day-of · truck lives at 2101 Roger Sedam Dr (COD)</li>
+<li>Turo #59595627 · GMC Sierra 1500 · plate 11T482K · <b>upload driver's license Wednesday</b> (app prompts 24 h before)</li>
+<li>Return full tank · no smoking, no pets in cab · $0.61/mi past 1,000</li>
+<li>Park emergencies: 911 from developed areas · signal islands at Canyon, Lake, Grant, Old Faithful</li></ul>
+</div>
+</section>
+
+</main>
+<footer>High loop · Canyon · Geyser dawn · Rodeo</footer>
+
+<script>
+/* Progressive enhancement — the page is fully usable without any of this. */
+(function(){
+  document.body.classList.add("js");
+  var state={done:{},shift:{}};
+  try{var s=localStorage.getItem("cy26v2");if(s)state=JSON.parse(s)}catch(e){}
+  function save(){try{localStorage.setItem("cy26v2",JSON.stringify(state))}catch(e){}}
+
+  function fmt(m){m=((m%1440)+1440)%1440;var h=Math.floor(m/60),mm=m%60,am=h>=12?"PM":"AM",hh=h%12||12;
+    return{t:hh+":"+(mm<10?"0":"")+mm,am:am}}
+
+  /* --- checkbox persistence --- */
+  var cks=document.querySelectorAll(".ck");
+  cks.forEach(function(c){
+    if(state.done[c.id])c.checked=true;
+    c.addEventListener("change",function(){state.done[c.id]=c.checked;save()});
+  });
+  /* make the check label work without toggling details */
+  document.querySelectorAll(".check").forEach(function(l){
+    l.addEventListener("click",function(e){e.stopPropagation()});
+  });
+
+  /* --- start-shift buttons --- */
+  var OPTS=[[-90,"Crazy early"],[-30,"\u221230 min"],[0,"On plan"],[30,"+30 min"],[60,"+1 hr"]];
+  function applyShift(sec,off){
+    sec.querySelectorAll(".stop").forEach(function(st){
+      var tm=st.querySelector(".time");if(!tm)return;
+      var fixed=st.hasAttribute("data-f");
+      var f=fmt(+tm.dataset.m+(fixed?0:off));
+      var b=tm.querySelector("b");b.textContent=f.t;
+      var bm=b.nextElementSibling;if(bm)bm.textContent=f.am;
+      var em=tm.querySelector("em");
+      if(em&&tm.dataset.e!==undefined){
+        var fe=fmt(+tm.dataset.e+(fixed?0:off));
+        var ev=em.querySelector(".ev");if(ev)ev.textContent=fe.t;
+        var old=em.querySelector("small.m2");if(old)old.remove();
+        if(fe.am!==f.am){var s=document.createElement("small");s.className="m2";s.textContent=fe.am;em.appendChild(s);}
+      }
+    });
+  }
+  document.querySelectorAll("section[data-shift]").forEach(function(sec){
+    var row=sec.querySelector(".shiftrow"),first=+sec.querySelector(".time").dataset.m;
+    OPTS.forEach(function(o){
+      var b=document.createElement("button");b.className="sh";b.dataset.v=o[0];
+      var f=fmt(first+o[0]);
+      b.innerHTML=o[1]+"<span>start "+f.t+(f.am==="AM"?"a":"p")+"</span>";
+      b.addEventListener("click",function(){
+        state.shift[sec.id]=o[0];save();
+        row.querySelectorAll(".sh").forEach(function(x){x.classList.remove("active")});
+        b.classList.add("active");
+        applyShift(sec,o[0]);mark();
+      });
+      row.appendChild(b);
+    });
+    var cur=state.shift[sec.id]||0;
+    row.querySelectorAll(".sh").forEach(function(x){if(+x.dataset.v===cur)x.classList.add("active")});
+    if(cur)applyShift(sec,cur);
+  });
+
+  /* --- NOW marker + jump to today --- */
+  function todaySec(){
+    var iso=new Date().toISOString().slice(0,10),out=null;
+    document.querySelectorAll("section[data-date]").forEach(function(s){if(s.dataset.date===iso)out=s});
+    return out;
+  }
+  function mark(){
+    document.querySelectorAll(".stop.now").forEach(function(s){s.classList.remove("now")});
+    var sec=todaySec();if(!sec)return;
+    var off=state.shift[sec.id]||0,n=new Date(),cur=n.getHours()*60+n.getMinutes(),pick=null;
+    sec.querySelectorAll(".stop").forEach(function(st){
+      var base=+st.querySelector(".time").dataset.m,fixed=st.hasAttribute("data-f");
+      var m=fixed?base:base+off;
+      if(m<=cur)pick=st;
+    });
+    /* NOW highlighting disabled by request */
+  }
+  mark();setInterval(mark,60000);
+  var ts=todaySec();
+  if(ts&&!location.hash)setTimeout(function(){ts.scrollIntoView()},60);
+
+  /* --- offline: register service worker when served over https --- */
+  if("serviceWorker" in navigator && location.protocol==="https:"){
+    navigator.serviceWorker.register("/sw.js").catch(function(){});
+  }
+})();
+</script>
+</body>
+</html>
