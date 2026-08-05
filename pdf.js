@@ -47,36 +47,30 @@ function decodeEntities(text) {
     .replace(/&#39;/g, "'");
 }
 
-// A hyperlink is dead weight on paper. Print the destination itself: the place
-// name, the street address, or the raw coordinates you could punch into a GPS.
+// A hyperlink is dead weight on paper. Print the destination itself.
+//
+// Each link's visible text now carries the full destination — place name plus
+// coordinates — so it is already print-ready and is used as-is. The href is
+// only a fallback, for a link whose text says nothing useful ("Open in Maps");
+// there, coordinates are typed out so they can go straight into a GPS.
 function linkToPlainText(href, innerHtml) {
+  const label = innerHtml
+    .replace(/<[^>]+>/g, '')
+    .replace(/[⌖◆▸]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (label && !/^open in maps$/i.test(label)) {
+    return `<span class="loc"><b>Map</b> ${label}</span>`;
+  }
+
   let query = '';
   try {
     query = new URL(decodeEntities(href)).searchParams.get('q') || '';
   } catch {
     query = '';
   }
-
-  // The visible label is worth keeping only when it names the place; most of
-  // them just say "Open in Maps".
-  let label = innerHtml.replace(/<[^>]+>/g, '').replace(/[⌖◆▸]/g, '').trim();
-  if (/^open in maps$/i.test(label)) label = '';
-
   const coords = query.match(COORD_RE);
-  let printed;
-  if (coords) {
-    const point = `${coords[1]}, ${coords[2]}`;
-    printed = label ? `${label} · ${point}` : point;
-  } else if (query) {
-    // Drop the label when the query already contains it (e.g. label
-    // "1822 Bleistein Ave", query "1822 Bleistein Ave Cody WY").
-    printed = label && !query.toLowerCase().includes(label.toLowerCase())
-      ? `${label} · ${query}`
-      : query;
-  } else {
-    printed = label || '';
-  }
-
+  const printed = coords ? `${coords[1]}, ${coords[2]}` : query;
   return printed ? `<span class="loc"><b>Map</b> ${printed}</span>` : '';
 }
 
