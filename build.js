@@ -18,6 +18,10 @@ const OUT = path.join(SRC, 'dist');
 const PAGES = path.join(SRC, 'pages');
 
 const ASSET_DIRS = ['css', 'js', 'assets'];
+// Files that have to sit at the site root to work. A service worker can only
+// control the paths below its own URL, so sw.js has to be served from /sw.js
+// for the trip page to keep working offline.
+const ROOT_FILES = ['sw.js'];
 
 // Goodreads IP-blocks Cloudflare's Worker/edge network (403), so we can't proxy
 // the shelf live from a Pages Function. Instead we fetch it here at build time
@@ -121,6 +125,11 @@ async function main() {
     if (!fs.existsSync(srcPath)) continue;
     copyRecursive(srcPath, path.join(OUT, dir));
     copyCount++;
+  }
+
+  for (const file of ROOT_FILES) {
+    const srcPath = path.join(SRC, file);
+    if (fs.existsSync(srcPath)) fs.copyFileSync(srcPath, path.join(OUT, file));
   }
 
   console.log(`Built ${htmlCount} HTML page(s), copied ${copyCount} asset director${copyCount === 1 ? 'y' : 'ies'} → ${path.relative(SRC, OUT)}/`);
